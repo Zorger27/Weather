@@ -1,0 +1,70 @@
+{
+  "locale": {
+    "en": "English",
+    "uk": "Ukrainian",
+    "es": "Spanish"
+  },
+  "header": {
+    "prg01": "Weather Newest",
+    "prg02": "Weather 3D",
+    "prg03": "Weather v.2.0",
+    "prg04": "Weather Old",
+    "about": "About"
+  },
+  "footer": {
+    "text1": "Designed By ",
+    "text2": "Zorger",
+    "text3": ".",
+    "text4": "All rights reserved"
+  },
+  "title": "Weather forecast",
+  "h1": "Weather in ",
+  "city": "City:",
+  "get": "Get",
+  "btn": "Getting data",
+  "loading": "loading...",
+  "cities": {
+    "Kyiv": "Kyiv",
+    "Odessa": "Odesa",
+    "Kharkiv": "Kharkiv",
+    "Dubai": "Dubai",
+    "Antalya": "Antalya",
+    "Shanghai": "Shanghai",
+    "Benidorm": "Benidorm",
+    "Valencia": "Valencia"
+  },
+  "temp": "Temperature",
+  "feels": "Feels like",
+  "speed": "Wind speed",
+  "direction": "Direction of the wind",
+  "humidity": "Humidity",
+  "pressure": "Pressure",
+  "error": "Failed to load weather data.",
+  "project1": {
+    "name": "Weather forecast Newest",
+    "disc": "Description"
+  },
+  "project2": {
+    "name": "Weather forecast 3D",
+    "disc": "Description"
+  },
+  "project3": {
+    "name": "Weather forecast v.2.0",
+    "disc": "Description"
+  },
+  "project4": {
+    "name": "Weather forecast Old",
+    "disc": "Description"
+  },
+  "about": {
+    "title": "Weather forecast",
+    "more01": "More information...",
+    "more02": "This web application receives real weather forecast data for any selected city from OpenWeather.",
+    "more03": "Sorts different weather indicators and shows them to the user in different views: list, table or creeping line.",
+    "more04": "There are a LOT of interesting things here! \uD83D\uDE09\uD83E\uDD13",
+    "more05": "Welcome! \uD83E\uDD29\uD83D\uDE0E",
+    "technologies": "Technologies",
+    "name": "Name",
+    "version": "Version"
+  }
+}

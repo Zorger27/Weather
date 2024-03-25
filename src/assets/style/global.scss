@@ -1,0 +1,82 @@
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  background-color: white;
+  font-size: 18px;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+line{
+  content:'';
+  display:block;
+  width:75%;
+  border:1px solid;
+  margin-bottom: 4px;
+}
+table {border-collapse: collapse;}
+
+.table {
+  display: inline-flex;
+  font-size: 2rem;
+  color: black;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  margin: 1rem auto;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+  tr, td, th {border: 1px solid #ddd;padding: 0.5rem;word-wrap: normal}
+  .nomer {max-width: 70px;}
+  .name {
+    text-align: left;
+    color: deepskyblue;
+    width: 320px;
+    a {color: inherit;text-decoration: none;}
+    a:hover {color: #2e768d;}
+  }
+  .code {color: darkgoldenrod;}
+  .price {text-align: right;color: deeppink;max-width: 230px;}
+}
+
+.fa, .fas {cursor: pointer;}
+.fa.fa-th {color: deepskyblue;}
+.fa-solid.fa-cloud {color: deepskyblue;}
+.fa.fa-face-grin-stars {color: darkgoldenrod;}
+.fa.fa-list {color: darkgoldenrod;}
+.fa-solid.fa-sun {color: darkgoldenrod;}
+.fa.fa-hat-wizard {color: darkgoldenrod;}
+.fa.fa-yin-yang {color: darkgoldenrod;}
+.fas.fa-arrow-alt-circle-down {color: mediumvioletred;}
+.fa.fa-birthday-cake {color: mediumvioletred;}
+.fa.fa-gift {color: mediumvioletred;}
+.fas.fa-arrow-alt-circle-up {color: lightseagreen;}
+.fa.fa-check-circle {color: lightseagreen;}
+.fa.fa-wallet {color: lightseagreen;}
+.fa.fa-sack-dollar {color: lightseagreen;}
+.fa.fa-bitcoin-sign {color: lightseagreen;}
+
+@media(max-width:1020px) {
+  line {width: 100%;}
+  .table {
+    font-size: 1.60rem;
+    padding: 0.8rem;
+    margin: 0.7rem auto;
+    tr, td, th {padding: 0.4rem;}
+  }
+}
+@media(max-width:768px) {
+  line {width: 100%;}
+  .table {
+    font-size: 1.50rem;
+    padding: 0;
+    margin: 0.7rem auto;
+    border: none;
+    border-radius: unset;
+    tr, td, th {padding: 0.3rem;}
+    .nomer, .name, .price {width: max-content;}
+  }
+}

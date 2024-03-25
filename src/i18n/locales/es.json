@@ -1,0 +1,70 @@
+{
+  "locale": {
+    "en": "Inglés",
+    "uk": "Ukraniano",
+    "es": "Español"
+  },
+  "header": {
+    "prg01": "Tiempo más nuevo",
+    "prg02": "Tiempo 3D",
+    "prg03": "Tiempo v.2.0",
+    "prg04": "Tiempo antiguos",
+    "about": "Sobre"
+  },
+  "footer": {
+    "text1": "Diseñado por ",
+    "text2": "Zorger",
+    "text3": ".",
+    "text4": "Todos los derechos reservados"
+  },
+  "title": "El Tiempo",
+  "h1": "Tiempo en ",
+  "city": "Ciudad:",
+  "get": "Obtener",
+  "btn": "Obtener datos",
+  "loading": "sobreprima...",
+  "cities": {
+    "Kyiv": "Kyiv",
+    "Odessa": "Odesa",
+    "Kharkiv": "Kharkiv",
+    "Dubai": "Dubai",
+    "Antalya": "Antalya",
+    "Shanghai": "Shanghai",
+    "Benidorm": "Benidorm",
+    "Valencia": "Valencia"
+  },
+  "temp": "Temperatura",
+  "feels": "Se siente como",
+  "speed": "Velocidad del viento",
+  "direction": "Dirección del viento",
+  "humidity": "Humedad",
+  "pressure": "Presión",
+  "error": "No se pudieron cargar los datos meteorológicos.",
+  "project1": {
+    "name": "El Tiempo más nuevo",
+    "disc": "Descripción"
+  },
+  "project2": {
+    "name": "El Tiempo 3D",
+    "disc": "Descripción"
+  },
+  "project3": {
+    "name": "El Tiempo v.2.0",
+    "disc": "Descripción"
+  },
+  "project4": {
+    "name": "El Tiempo Antiguos",
+    "disc": "Descripción"
+  },
+  "about": {
+    "title": "El Tiempo de OpenWeather",
+    "more01": "Más información...",
+    "more02": "Esta aplicación web recibe datos reales del pronóstico del tiempo para cualquier ciudad seleccionada de OpenWeather.",
+    "more03": "Ordena diferentes indicadores meteorológicos y se los muestra al usuario en diferentes vistas: lista, tabla o línea progresiva.",
+    "more04": "¡Hay MUCHAS cosas interesantes aquí! \uD83D\uDE09\uD83E\uDD13",
+    "more05": "¡Bienvenido! \uD83E\uDD29\uD83D\uDE0E",
+    "technologies": "Tecnologías",
+    "name": "Nombre",
+    "version": "Versión"
+  }
+}
