@@ -18,63 +18,59 @@ interface WeatherData {
 @Options({
   data() {
     return {
-      loading: true,
-      error: null,
-      cityName: this.$t("cities.Kyiv"),
+      loading: true as boolean | undefined,
+      error: null as string | null | undefined,
+      weather: null as WeatherData | null,
+      cityName: '' as string,
       cities: ["Kyiv", "Odessa", "Kharkiv", "Dubai", "Antalya", "Shanghai", "Benidorm", "Valencia"].map((city, index) => {
         return this.$t(`cities.${city}`, index);
       }),
     };
   },
-  components: {CurrentDate},
-})
-export default class MyWeather extends Vue {
-  error: string | null | undefined;
-  loading: boolean | undefined;
-  weather: WeatherData | null = null;
-  cityName!: string;
-
-  getWeather() {
-    this.loading = true;
-    this.weather = null;
-    this.error = null;
-
-    const openWeatherMapToken = process.env.VUE_APP_OPENWEATHERMAP_TOKEN;
-    axios
-      .get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${this.cityName}&units=metric&lang=ua&appid=${openWeatherMapToken}`
-      )
-      .then(response => {
-        this.weather = response.data;
-      })
-      .catch(error => {
-        this.error = `${this.$t('error')}`;
-      })
-      .finally(() => {
-        this.loading = false;
-      });
-  }
-  saveCityToLocalStorage(city: string) {
-    localStorage.setItem("weatherCity", city);
-  }
-  handleCityInputChange(city: string) {
-    this.cityName = city;
-    this.saveCityToLocalStorage(city);
-  }
-  updateCityName(city: string) {
-    this.cityName = city;
-    this.getWeather();
-    this.saveCityToLocalStorage(city);
-  }
-
   mounted() {
     const selectedCity = localStorage.getItem("weatherCity");
     if (selectedCity) {
       this.cityName = selectedCity;
+    } else {
+      this.cityName = this.$t("cities.Kyiv");
     }
     this.getWeather();
-  }
-}
+  },
+  methods: {
+    async getWeather() {
+      this.loading = true;
+      this.weather = null;
+      this.error = null;
+
+      try {
+        const openWeatherMapToken = process.env["VUE_APP_OPENWEATHERMAP_TOKEN"];
+        const response = await axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?q=${this.cityName}&units=metric&lang=ua&appid=${openWeatherMapToken}`
+        );
+        this.weather = response.data;
+      } catch (error) {
+        console.error("Error fetching weather data:", error);
+        this.error = `${this.$t('error')}: ${error}`;
+      } finally {
+        this.loading = false;
+      }
+    },
+    saveCityToLocalStorage(city: string) {
+      localStorage.setItem("weatherCity", city);
+    },
+    handleCityInputChange(city: string) {
+      this.cityName = city;
+      this.saveCityToLocalStorage(city);
+    },
+    updateCityName(city: string) {
+      this.cityName = city;
+      this.getWeather();
+      this.saveCityToLocalStorage(city);
+    },
+  },
+  components: {CurrentDate},
+})
+export default class MyWeather extends Vue {}
 </script>
 
 <template>
@@ -90,7 +86,6 @@ export default class MyWeather extends Vue {
         </select>
       </div>
       <h1>{{ $t('h1') }}{{ this.cityName }}</h1>
-<!--      <CurrentDate></CurrentDate>-->
       <div v-if="loading">{{ $t('loading') }}</div>
       <div v-if="error">{{ error }}</div>
       <div class="indicators" v-if="weather">
