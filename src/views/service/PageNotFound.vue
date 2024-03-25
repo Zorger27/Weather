@@ -6,13 +6,13 @@ import {openGraphMixin} from "@/assets/ogimage/openGraphMixin";
   mixins: [openGraphMixin],
   mounted() {
     const mainTitle = 'Page NOT Found';
-    // const title = 'Weather - Page NOT Found';
-    // const metaDescription = 'Weather forecast from OpenWeather';
-    // const description = 'Weather - Page NOT Found';
-    // const imageUrl = 'https://cryptocurrencies-gold.vercel.app/assets/ogimage/bmp/image_404.jpg';
-    // const url = 'https://cryptocurrencies-gold.vercel.app';
-    //
-    // this.setOpenGraphTags(metaDescription, title, description, imageUrl, url);
+    const title = 'Weather - Page NOT Found';
+    const metaDescription = 'Weather forecast from OpenWeather';
+    const description = 'Weather - Page NOT Found';
+    const imageUrl = 'https://weather-zorger.vercel.app/assets/ogimage/bmp/image_404.jpg';
+    const url = 'https://weather-zorger.vercel.app';
+
+    this.setOpenGraphTags(metaDescription, title, description, imageUrl, url);
     this.setPageTitle(mainTitle);
   },
   methods: {},

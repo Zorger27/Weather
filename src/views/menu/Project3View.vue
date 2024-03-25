@@ -13,13 +13,13 @@ import CurrentDate from "@/components/util/CurrentDate.vue";
   },
   mounted() {
     const mainTitle = 'Weather v.2.0';
-    // const title = 'Weather v.2.0';
-    // const metaDescription = 'Weather forecast from OpenWeather';
-    // const description = 'Weather forecast from OpenWeather';
-    // const imageUrl = 'https://cryptocurrencies-gold.vercel.app/assets/ogimage/bmp/project3.jpg';
-    // const url = 'https://cryptocurrencies-gold.vercel.app/project3';
-    //
-    // this.setOpenGraphTags(metaDescription, title, description, imageUrl, url);
+    const title = 'Weather v.2.0';
+    const metaDescription = 'Weather forecast from OpenWeather';
+    const description = 'Weather forecast from OpenWeather';
+    const imageUrl = 'https://weather-zorger.vercel.app/assets/ogimage/bmp/project3.jpg';
+    const url = 'https://weather-zorger.vercel.app/project3';
+
+    this.setOpenGraphTags(metaDescription, title, description, imageUrl, url);
     this.setPageTitle(mainTitle);
   },
   methods: {

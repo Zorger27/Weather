@@ -14,13 +14,13 @@ import OpenWeather from "@/components/other/OpenWeather.vue";
   },
   mounted() {
     const mainTitle = 'Weather Old';
-    // const title = 'Weather Old';
-    // const metaDescription = 'Weather forecast from OpenWeather';
-    // const description = 'Weather forecast from OpenWeather';
-    // const imageUrl = 'https://cryptocurrencies-gold.vercel.app/assets/ogimage/bmp/project4.jpg';
-    // const url = 'https://cryptocurrencies-gold.vercel.app/project4';
-    //
-    // this.setOpenGraphTags(metaDescription, title, description, imageUrl, url);
+    const title = 'Weather Old';
+    const metaDescription = 'Weather forecast from OpenWeather';
+    const description = 'Weather forecast from OpenWeather';
+    const imageUrl = 'https://weather-zorger.vercel.app/assets/ogimage/bmp/project4.jpg';
+    const url = 'https://weather-zorger.vercel.app/project4';
+
+    this.setOpenGraphTags(metaDescription, title, description, imageUrl, url);
     this.setPageTitle(mainTitle);
   },
   methods: {

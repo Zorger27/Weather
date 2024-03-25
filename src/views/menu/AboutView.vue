@@ -14,13 +14,13 @@ import {openGraphMixin} from "@/assets/ogimage/openGraphMixin";
   },
   mounted() {
     const mainTitle = 'About Weather';
-    // const title = 'About Weather';
-    // const metaDescription = 'Weather forecast from OpenWeather';
-    // const description = 'Weather forecast from OpenWeather';
-    // const imageUrl = 'https://cryptocurrencies-gold.vercel.app/assets/ogimage/bmp/about.jpg';
-    // const url = 'https://cryptocurrencies-gold.vercel.app/about';
-    //
-    // this.setOpenGraphTags(metaDescription, title, description, imageUrl, url);
+    const title = 'About Weather';
+    const metaDescription = 'Weather forecast from OpenWeather';
+    const description = 'Weather forecast from OpenWeather';
+    const imageUrl = 'https://weather-zorger.vercel.app/assets/ogimage/bmp/about.jpg';
+    const url = 'https://weather-zorger.vercel.app/about';
+
+    this.setOpenGraphTags(metaDescription, title, description, imageUrl, url);
     this.setPageTitle(mainTitle);
   },
   methods: {changeView() {this.tableView = !this.tableView;}},
