@@ -71,10 +71,12 @@ export default class Project4 extends Vue {};
     <line></line>
     <CurrentDate></CurrentDate>
     <div class="inner">
-      <h2 class="title">{{ $t('title') }}<i @click="changeOpenWeatherView"><span :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i></h2>
+      <h2 class="title">{{ $t('title') }}<i @click="changeOpenWeatherView"><span
+        :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i></h2>
       <div class="input-group">
         <label for="city">{{ $t('city') }}</label>
-        <input type="text" id="city" v-model="cityName" @input="callHandleCityInputChange(cityName)" @keydown.enter="callGetWeather" ref="cityInput"> <i title="Clear" @click="clearCity" class="fas fa-trash-alt"></i>
+        <input type="text" id="city" v-model="cityName" @input="callHandleCityInputChange(cityName)" @keydown.enter="callGetWeather"
+               ref="cityInput"> <i title="Clear" @click="clearCity" class="fas fa-trash-alt"></i>
         <button class="get" @click="callGetWeather" :title="$t('btn')">{{ $t('get') }}</button>
         <button class="getMobile" @click="callGetWeather" :title="$t('btn')"><i class="fas fa-arrow-circle-down"></i></button>
         <select class="city-list" v-model="cityName" @change="callUpdateCityName(cityName)">
