@@ -30,28 +30,106 @@ interface WeatherData {
       weather: null as WeatherData | null,
       cityName: '' as string,
       countryMapping: {
-        "UA": "Украина",
-        "US": "Соединенные Штаты",
-        "GB": "Великобритания",
-        "CA": "Канада",
-        "DE": "Германия",
-        "FR": "Франция",
-        "IT": "Италия",
-        "ES": "Испания",
-        "RU": "Россия",
-        "CN": "Китай",
-        "JP": "Япония",
-        "AU": "Австралия",
-        "BR": "Бразилия",
-        "IN": "Индия",
-        "MX": "Мексика",
-        "KR": "Южная Корея",
-        "NL": "Нидерланды",
-        "SE": "Швеция",
-        "CH": "Швейцария",
-        "SA": "Саудовская Аравия",
-        "TR": "Турция",
-        "AE": "Объединенные Арабские Эмираты"
+        "UA": {
+          "uk": "Україна",
+          "en": "Ukraine",
+          "es": "Ucrania"
+        },
+        "US": {
+          "uk": "Сполучені Штати",
+          "en": "United States",
+          "es": "Estados Unidos"
+        },
+        "GB": {
+          "uk": "Велика Британія",
+          "en": "Great Britain",
+          "es": "Gran Bretaña"
+        },
+        "DE": {
+          "uk": "Німеччина",
+          "en": "Germany",
+          "es": "Alemania"
+        },
+        "FR": {
+          "uk": "Франція",
+          "en": "France",
+          "es": "Francia"
+        },
+        "IT": {
+          "uk": "Італія",
+          "en": "Italy",
+          "es": "Italia"
+        },
+        "ES": {
+          "uk": "Іспанія",
+          "en": "Spain",
+          "es": "España"
+        },
+        "TR": {
+          "uk": "Туреччина",
+          "en": "Turkey",
+          "es": "Turquía"
+        },
+        "AE": {
+          "uk": "Об'єднані Арабські Емірати",
+          "en": "United Arab Emirates",
+          "es": "Emiratos Árabes Unidos"
+        },
+        "CN": {
+          "uk": "Китай",
+          "en": "China",
+          "es": "China"
+        },
+        "JP": {
+          "uk": "Японія",
+          "en": "Japan",
+          "es": "Japón"
+        },
+        "BR": {
+          "uk": "Бразилія",
+          "en": "Brazil",
+          "es": "Brasil"
+        },
+        "IN": {
+          "uk": "Індія",
+          "en": "India",
+          "es": "India"
+        },
+        "RU": {
+          "uk": "Росія",
+          "en": "Russia",
+          "es": "Rusia"
+        },
+        "CA": {
+          "uk": "Канада",
+          "en": "Canada",
+          "es": "Canadá"
+        },
+        "AU": {
+          "uk": "Австралія",
+          "en": "Australia",
+          "es": "Australia"
+        },
+        "MX": {
+          "uk": "Мексика",
+          "en": "Mexico",
+          "es": "México"
+        },
+        "ZA": {
+          "uk": "Південна Африка",
+          "en": "South Africa",
+          "es": "Sudáfrica"
+        },
+        "KR": {
+          "uk": "Південна Корея",
+          "en": "South Korea",
+          "es": "Corea del Sur"
+        },
+        "SE": {
+          "uk": "Швеція",
+          "en": "Sweden",
+          "es": "Suecia"
+        }
       }
     };
   },
@@ -122,13 +200,14 @@ export default class MyWeather extends Vue {}
       <div v-if="loading">{{ $t('loading') }}</div>
       <div v-if="error">{{ error }}</div>
       <div class="indicators" v-if="weather">
-        <p>country: {{ countryMapping[weather.sys.country] }}</p>
-        <p>sunrise: {{ formatTime(weather.sys.sunrise) }}</p>
-        <p>sunset: {{ formatTime(weather.sys.sunset) }}</p>
+        <p>{{ $t('country') }}: {{ this.$i18n.locale === "uk" ? countryMapping[weather.sys.country]["uk"] : this.$i18n.locale === "es" ? countryMapping[weather.sys.country]["es"] : countryMapping[weather.sys.country]["en"]}}</p>
+        <p>{{ $t('sunrise') }}: {{ formatTime(weather.sys.sunrise) }}</p>
+        <p>{{ $t('sunset') }}: {{ formatTime(weather.sys.sunset) }}</p>
+        <line></line>
         <p>{{ $t('temp') }}: {{ weather.main.temp }}°C</p>
         <p>{{ $t('feels') }}: {{ weather.main.feels_like }}°C</p>
-        <p>temp_min: {{ weather.main.temp_min }}°C</p>
-        <p>temp_max: {{ weather.main.temp_max }}°C</p>
+        <p>{{ $t('temp-min') }}: {{ weather.main.temp_min }}°C</p>
+        <p>{{ $t('temp-max') }}: {{ weather.main.temp_max }}°C</p>
         <p>{{ $t('speed') }}: {{ weather.wind.speed }} m/s</p>
         <p>{{ $t('direction') }}: {{ weather.wind.deg }}°</p>
         <p>{{ $t('humidity') }}: {{ weather.main.humidity }}%</p>
@@ -171,8 +250,9 @@ export default class MyWeather extends Vue {}
       align-items: flex-start;
       padding: 0 1rem 0 1rem;
 
-      p {
-        margin: 0.5rem;
+      p {margin: 0.5rem;}
+      line {
+        width: 100%;
       }
     }
   }
@@ -184,16 +264,11 @@ export default class MyWeather extends Vue {}
     flex-direction: column;
 
     .city {
-      h1 {
-        margin: 0.5rem 0 0.2rem 0;
-      }
+      h1 {margin: 0.5rem 0 0.2rem 0;}
 
       .indicators {
         padding: 0;
-
-        p {
-          margin: 0.2rem 0;
-        }
+        p {margin: 0.2rem 0;}
       }
     }
   }

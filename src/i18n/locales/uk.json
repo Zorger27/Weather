@@ -33,8 +33,13 @@
     "Benidorm": "Benidorm",
     "Valencia": "Valencia"
   },
+  "country": "Країна",
+  "sunrise": "Схід сонця",
+  "sunset": "Захід сонця",
   "temp": "Температура",
   "feels": "Відчувається, як",
+  "temp-min": "Мін. температура",
+  "temp-max": "Макс. температура",
   "speed": "Швидкість вітру",
   "direction": "Напрямок вітру",
   "humidity": "Вологість",

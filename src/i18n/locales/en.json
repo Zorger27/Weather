@@ -33,8 +33,13 @@
     "Benidorm": "Benidorm",
     "Valencia": "Valencia"
   },
+  "country": "Country",
+  "sunrise": "Sunrise",
+  "sunset": "Sunset",
   "temp": "Temperature",
   "feels": "Feels like",
+  "temp-min": "Minimum temperature",
+  "temp-max": "Maximum temperature",
   "speed": "Wind speed",
   "direction": "Direction of the wind",
   "humidity": "Humidity",
