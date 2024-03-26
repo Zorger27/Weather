@@ -56,7 +56,7 @@ export default class Project4 extends Vue {};
     <line></line>
     <CurrentDate></CurrentDate>
     <div class="inner">
-      <h2 class="title">{{ $t('title') }} <i @click="changeOpenWeatherView"><span :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i></h2>
+      <h2 class="title">{{ $t('title') }}<i @click="changeOpenWeatherView"><span :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i></h2>
       <div class="input-group">
         <label for="city">{{ $t('city') }}</label>
         <input type="text" id="city" v-model="cityName" @input="callHandleCityInputChange(cityName)" @keydown.enter="callGetWeather"/>
@@ -80,25 +80,28 @@ export default class Project4 extends Vue {};
   background: linear-gradient(to bottom, rgb(229, 255, 229), rgb(250, 247, 234)) no-repeat center;
 
   .inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    grid-column-gap: 0.5rem;
-    grid-row-gap: 0;
-    grid-auto-flow: column;
-    grid-template-areas: "title input-group";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //display: grid;
+    //grid-template-columns: 1fr 1fr;
+    //grid-template-rows: auto;
+    //grid-column-gap: 0.5rem;
+    //grid-row-gap: 0;
+    //grid-auto-flow: column;
+    //grid-template-areas: "title input-group";
 
     .title {
       grid-area: title;
-      display: grid;
-      grid-auto-flow: column;
-      justify-content: right;
-      align-items: center;
+      //display: grid;
+      //grid-auto-flow: column;
+      //justify-content: right;
+      //align-items: center;
       font-size: 2.3rem;
       margin: 0.7rem 0;
       color: darkgreen;
       .fa-solid.fa-sun, .fa-solid.fa-cloud {
-        margin-left: 0.5rem;
+        margin: 0 0.5rem;
       }
       .fa-solid.fa-sun:hover {
         color: gold;
@@ -110,9 +113,9 @@ export default class Project4 extends Vue {};
     .input-group {
       grid-area: input-group;
       font-size: 2.3rem;
-      display: grid;
-      grid-auto-flow: column;
-      justify-content: left;
+      //display: grid;
+      //grid-auto-flow: column;
+      //justify-content: left;
       align-items: center;
       .getMobile {
         display: none;
@@ -126,7 +129,7 @@ export default class Project4 extends Vue {};
       }
       label {
         font-weight: bold;
-        font-size: 2.1rem;
+        font-size: 2rem;
       }
       input[type="text"] {
         flex: 1 0 auto;
@@ -182,7 +185,7 @@ export default class Project4 extends Vue {};
 @media(max-width: 1020px) {
   .weather {
     .inner {
-      grid-column-gap: 0.3rem;
+      //grid-column-gap: 0.3rem;
       .title {
         font-size: 1.8rem;
       }
@@ -218,7 +221,7 @@ export default class Project4 extends Vue {};
         font-size: 2rem;
         margin: 0.5rem 0 0;
         .fa-solid.fa-sun, .fa-solid.fa-cloud {
-          margin-left: 0.5rem;
+          margin: 0 0.5rem;
         }
       }
 
@@ -241,7 +244,7 @@ export default class Project4 extends Vue {};
           font-size: 1.1rem;
         }
         label {
-          font-size: 1.8rem;
+          font-size: 1.7rem;
         }
         input[type="text"] {
           width: 75px;
