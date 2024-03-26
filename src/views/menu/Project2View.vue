@@ -55,7 +55,6 @@ export default class Project2 extends Vue {
 .container {
   flex: 1 0 auto;
   background: linear-gradient(to bottom, rgb(255, 240, 244), rgb(229, 251, 255)) no-repeat center;
-  h1 {font-size: 2.5rem;margin: 0.7rem auto;color: black;}
 
   .bank {
     font-size: 2.5rem;
@@ -76,13 +75,13 @@ export default class Project2 extends Vue {
 }
 @media(max-width: 1020px) {
   .container {
-    h1, .bank {font-size: 2.3rem;margin: 0.6rem auto;}
+    .bank {font-size: 2.3rem;margin: 0.6rem auto;}
   }
 }
 
 @media (max-width: 768px) {
   .container {
-    h1, .bank {font-size: 2rem;margin: 0.5rem auto;}
+    .bank {font-size: 2rem;margin: 0.5rem auto;}
     .creep3d {
       max-height: 20vh;
     }

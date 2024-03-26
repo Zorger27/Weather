@@ -9,7 +9,9 @@ import OpenWeather from "@/components/other/OpenWeather.vue";
   mixins: [openGraphMixin],
   data() {
     return {
-      OpenWeatherView: false
+      OpenWeatherView: false,
+      cityName: '' as string,
+      cities: [] as string[],
     }
   },
   mounted() {
@@ -26,12 +28,26 @@ import OpenWeather from "@/components/other/OpenWeather.vue";
   methods: {
     changeOpenWeatherView() {
       this.OpenWeatherView = !this.OpenWeatherView;
-    }
+    },
+    callGetWeather() {
+      if (this.$refs.myWeatherComponent) {
+        this.$refs.myWeatherComponent.getWeather();
+      }
+    },
+    callHandleCityInputChange(cityName: string) {
+      if (this.$refs.myWeatherComponent) {
+        this.$refs.myWeatherComponent.handleCityInputChange(cityName);
+      }
+    },
+    callUpdateCityName(cityName: string) {
+      if (this.$refs.myWeatherComponent) {
+        this.$refs.myWeatherComponent.updateCityName(cityName);
+      }
+    },
   },
   components: {OpenWeather, MyWeather, CurrentDate},
 })
-export default class Project4 extends Vue {
-};
+export default class Project4 extends Vue {};
 </script>
 
 <template>
@@ -39,13 +55,20 @@ export default class Project4 extends Vue {
     <h1>{{ $t('project4.name') }}</h1>
     <line></line>
     <CurrentDate></CurrentDate>
-    <h1 class="bank">
-      <a href="https://openweathermap.org" title="In more detail..." target="_blank">
-        OpenWeather
-      </a> <i @click="changeOpenWeatherView"><span :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i>
-    </h1>
+    <div class="inner">
+      <h2 class="title">{{ $t('title') }} <i @click="changeOpenWeatherView"><span :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i></h2>
+      <div class="input-group">
+        <label for="city">{{ $t('city') }}</label>
+        <input type="text" id="city" v-model="cityName" @input="callHandleCityInputChange(cityName)" @keydown.enter="callGetWeather"/>
+        <button class="get" @click="callGetWeather" :title="$t('btn')">{{ $t('get') }}</button>
+        <button class="getMobile" @click="callGetWeather" :title="$t('btn')"><i class="fas fa-arrow-circle-down"></i></button>
+        <select class="city-list" v-model="cityName" @change="callUpdateCityName(cityName)">
+          <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
+        </select>
+      </div>
+    </div>
     <div class="container">
-      <MyWeather class="myWidget"></MyWeather>
+      <MyWeather ref="myWeatherComponent" class="myWidget" :cityName="cityName" @update:cities="cities = $event"></MyWeather>
       <OpenWeather v-show="OpenWeatherView" class="widget" :widgetId="15" :cityId="'703448'"/>
     </div>
   </div>
@@ -55,12 +78,89 @@ export default class Project4 extends Vue {
 .weather {
   flex: 1 0 auto;
   background: linear-gradient(to bottom, rgb(229, 255, 229), rgb(250, 247, 234)) no-repeat center;
-  h1 {font-size: 2.5rem;margin: 0.7rem auto;color: black;}
 
-  .bank {
-    font-size: 2.5rem;
-    a {text-decoration: none; color: rebeccapurple;}
-    a:hover {color: cornflowerblue;}
+  .inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-column-gap: 0.5rem;
+    grid-row-gap: 0;
+    grid-auto-flow: column;
+    grid-template-areas: "title input-group";
+
+    .title {
+      grid-area: title;
+      display: grid;
+      grid-auto-flow: column;
+      justify-content: right;
+      align-items: center;
+      font-size: 2.3rem;
+      margin: 0.7rem 0;
+      color: darkgreen;
+      .fa-solid.fa-sun, .fa-solid.fa-cloud {
+        margin-left: 0.5rem;
+      }
+      .fa-solid.fa-sun:hover {
+        color: gold;
+      }
+      .fa-solid.fa-cloud:hover {
+        color: blue;
+      }
+    }
+    .input-group {
+      grid-area: input-group;
+      font-size: 2.3rem;
+      display: grid;
+      grid-auto-flow: column;
+      justify-content: left;
+      align-items: center;
+      .getMobile {
+        display: none;
+      }
+      .get {
+        display: inline-flex;
+      }
+      label, input, button, select {
+        margin: 0 0.4rem 0 0;
+        font-size: 1.5rem;
+      }
+      label {
+        font-weight: bold;
+        font-size: 2.1rem;
+      }
+      input[type="text"] {
+        flex: 1 0 auto;
+        color: black;
+        caret-color: red;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: 120px;
+        padding: 0.4rem;
+      }
+      input:active, input:focus {
+        outline: 1px solid transparent;
+        box-shadow: 3px 3px 4px 0 lightgrey;
+      }
+      button {
+        padding: 0.43rem;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        transition: border-color .2s ease-in-out, background-color .2s, box-shadow .2s;
+      }
+      button:hover {
+        background-color: #f1f1f1;
+        box-shadow: 3px 3px 4px 0 lightgrey;
+        border-color: #ddd;
+      }
+      select {
+        border-radius: 5px;
+        padding: 0.4rem;
+        border: 1px solid #ddd;
+      }
+    }
   }
 
   .container {
@@ -81,13 +181,78 @@ export default class Project4 extends Vue {
 }
 @media(max-width: 1020px) {
   .weather {
-    h1, .bank {font-size: 2.3rem;margin: 0.6rem auto;}
+    .inner {
+      grid-column-gap: 0.3rem;
+      .title {
+        font-size: 1.8rem;
+      }
+      .input-group {
+        label, input, button, select {
+          margin: 0.3rem 0.2rem 0;
+          font-size: 1.3rem;
+        }
+        label {
+          font-size: 1.6rem;
+        }
+      }
+    }
   }
 }
 
 @media (max-width: 768px) {
   .weather {
-    h1, .bank {font-size: 2rem;margin: 0.5rem auto;}
+    .inner{
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      grid-column-gap: 0;
+      grid-row-gap: 0;
+      grid-auto-flow: column;
+      grid-template-areas:
+        "title"
+        "input-group";
+
+      .title {
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        margin: 0.5rem 0 0;
+        .fa-solid.fa-sun, .fa-solid.fa-cloud {
+          margin-left: 0.5rem;
+        }
+      }
+
+      .input-group {
+        justify-content: center;
+        align-items: center;
+        .get {
+          display: none;
+        }
+        .getMobile {
+          display: inline-flex;
+          border-color: #ddd;
+          color: lightskyblue;
+          padding: 0.27rem;
+          font-size: 1.1rem;
+        }
+
+        label, input, button, select {
+          margin: 0.3rem 0.2rem 0;
+          font-size: 1.1rem;
+        }
+        label {
+          font-size: 1.8rem;
+        }
+        input[type="text"] {
+          width: 75px;
+          padding: 0.2rem;
+        }
+        select {
+          border-radius: 5px;
+          padding: 0.2rem;
+        }
+      }
+    }
   }
 }
 </style>

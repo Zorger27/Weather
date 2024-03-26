@@ -22,10 +22,14 @@ interface WeatherData {
       error: null as string | null | undefined,
       weather: null as WeatherData | null,
       cityName: '' as string,
-      cities: ["Kyiv", "Odessa", "Kharkiv", "Dubai", "Antalya", "Shanghai", "Benidorm", "Valencia"].map((city, index) => {
-        return this.$t(`cities.${city}`, index);
-      }),
     };
+  },
+  computed: {
+    cities() {
+      return ["Kyiv", "Odessa", "Kharkiv", "Dubai", "Antalya", "Shanghai", "Benidorm", "Valencia"].map((city, index) => {
+        return this.$t(`cities.${city}`, index);
+      });
+    }
   },
   mounted() {
     const selectedCity = localStorage.getItem("weatherCity");
@@ -35,6 +39,7 @@ interface WeatherData {
       this.cityName = this.$t("cities.Kyiv");
     }
     this.getWeather();
+    this.$emit('update:cities', this.cities);
   },
   methods: {
     async getWeather() {
@@ -68,6 +73,12 @@ interface WeatherData {
       this.saveCityToLocalStorage(city);
     },
   },
+  props: {
+    cityName: {
+      type: String,
+      required: true
+    },
+  },
   components: {CurrentDate},
 })
 export default class MyWeather extends Vue {}
@@ -76,15 +87,6 @@ export default class MyWeather extends Vue {}
 <template>
   <div class="inner">
     <div class="city">
-      <div class="input-group">
-        <label for="city">{{ $t('city') }}</label>
-        <input type="text" id="city" v-model="cityName" @input="handleCityInputChange(cityName)" @keydown.enter="getWeather"/>
-        <button class="get" @click="getWeather" :title="$t('btn')">{{ $t('get') }}</button>
-        <button class="getMobile" @click="getWeather" :title="$t('btn')"><i class="fas fa-arrow-circle-down"></i></button>
-        <select class="city-list" v-model="cityName" @change="updateCityName(cityName)">
-          <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
-        </select>
-      </div>
       <h1>{{ $t('h1') }}{{ this.cityName }}</h1>
       <div v-if="loading">{{ $t('loading') }}</div>
       <div v-if="error">{{ error }}</div>
@@ -119,53 +121,6 @@ export default class MyWeather extends Vue {}
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    .input-group {
-      .getMobile {
-        display: none;
-      }
-      .get {
-        display: inline-flex;
-      }
-      label, input, button, select {
-        margin: 1rem 0.4rem 0 0;
-        font-size: 1.5rem;
-      }
-      label {
-        font-weight: bold;
-      }
-      input[type="text"] {
-        flex: 1 0 auto;
-        color: black;
-        caret-color: red;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        width: 120px;
-        padding: 0.4rem;
-      }
-      input:active, :focus {
-        outline: 1px solid transparent;
-        box-shadow: 3px 3px 4px 0 lightgrey;
-      }
-      button {
-        padding: 0.43rem;
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        text-align: center;
-        cursor: pointer;
-        transition: border-color .2s ease-in-out, background-color .2s, box-shadow .2s;
-      }
-      button:hover {
-        background-color: #f1f1f1;
-        box-shadow: 3px 3px 4px 0 lightgrey;
-        border-color: #ddd;
-      }
-      select {
-        border-radius: 5px;
-        padding: 0.4rem;
-        border: 1px solid #ddd;
-      }
-    }
 
     h1 {
       text-decoration: underline;
@@ -197,33 +152,6 @@ export default class MyWeather extends Vue {}
         margin: 0.5rem 0 0.2rem 0;
       }
 
-      .input-group {
-        justify-content: center;
-        align-items: center;
-        .get {
-          display: none;
-        }
-        .getMobile {
-          display: inline-flex;
-          border-color: #ddd;
-          color: lightskyblue;
-          padding: 0.27rem;
-          font-size: 1.1rem;
-        }
-
-        label, input, button, select {
-          margin: 1rem 0.2rem 0 0.2rem;
-          font-size: 1rem;
-        }
-        input[type="text"] {
-          width: 75px;
-          padding: 0.2rem;
-        }
-        select {
-          border-radius: 5px;
-          padding: 0.2rem;
-        }
-      }
       .indicators {
         padding: 0;
 
