@@ -203,7 +203,10 @@ export default class MyWeather extends Vue {}
     flex-direction: column;
 
     .city {
-      h1 {margin: 0.5rem 0 0.2rem 0;}
+      h1 {
+        font-size: 1.7rem;
+        margin: 0.5rem 0 0.2rem 0;
+      }
 
       .indicators {
         padding: 0;
