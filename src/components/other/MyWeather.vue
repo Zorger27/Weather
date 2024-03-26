@@ -7,6 +7,8 @@ interface WeatherData {
   main: {
     temp: number;
     feels_like: number;
+    temp_min: number;
+    temp_max: number;
     humidity: number;
     pressure: number;
   };
@@ -14,6 +16,11 @@ interface WeatherData {
     speed: number;
     deg: number;
   };
+  sys: {
+    country: string;
+    sunrise: number;
+    sunset: number;
+  },
 }
 @Options({
   data() {
@@ -22,6 +29,30 @@ interface WeatherData {
       error: null as string | null | undefined,
       weather: null as WeatherData | null,
       cityName: '' as string,
+      countryMapping: {
+        "UA": "Украина",
+        "US": "Соединенные Штаты",
+        "GB": "Великобритания",
+        "CA": "Канада",
+        "DE": "Германия",
+        "FR": "Франция",
+        "IT": "Италия",
+        "ES": "Испания",
+        "RU": "Россия",
+        "CN": "Китай",
+        "JP": "Япония",
+        "AU": "Австралия",
+        "BR": "Бразилия",
+        "IN": "Индия",
+        "MX": "Мексика",
+        "KR": "Южная Корея",
+        "NL": "Нидерланды",
+        "SE": "Швеция",
+        "CH": "Швейцария",
+        "SA": "Саудовская Аравия",
+        "TR": "Турция",
+        "AE": "Объединенные Арабские Эмираты"
+      }
     };
   },
   computed: {
@@ -32,13 +63,9 @@ interface WeatherData {
     }
   },
   mounted() {
-    const selectedCity = localStorage.getItem("weatherCity");
-    if (selectedCity) {
-      this.cityName = selectedCity;
-    } else {
-      this.cityName = this.$t("cities.Kyiv");
+    if (this.cityName) {
+      this.getWeather();
     }
-    this.getWeather();
     this.$emit('update:cities', this.cities);
   },
   methods: {
@@ -72,6 +99,10 @@ interface WeatherData {
       this.getWeather();
       this.saveCityToLocalStorage(city);
     },
+    formatTime(timestamp: number) {
+      const date = new Date(timestamp * 1000); // Преобразование в миллисекунды
+      return date.toLocaleTimeString(); // Возвращает строку времени в формате по умолчанию
+    },
   },
   props: {
     cityName: {
@@ -91,8 +122,13 @@ export default class MyWeather extends Vue {}
       <div v-if="loading">{{ $t('loading') }}</div>
       <div v-if="error">{{ error }}</div>
       <div class="indicators" v-if="weather">
+        <p>country: {{ countryMapping[weather.sys.country] }}</p>
+        <p>sunrise: {{ formatTime(weather.sys.sunrise) }}</p>
+        <p>sunset: {{ formatTime(weather.sys.sunset) }}</p>
         <p>{{ $t('temp') }}: {{ weather.main.temp }}°C</p>
         <p>{{ $t('feels') }}: {{ weather.main.feels_like }}°C</p>
+        <p>temp_min: {{ weather.main.temp_min }}°C</p>
+        <p>temp_max: {{ weather.main.temp_max }}°C</p>
         <p>{{ $t('speed') }}: {{ weather.wind.speed }} m/s</p>
         <p>{{ $t('direction') }}: {{ weather.wind.deg }}°</p>
         <p>{{ $t('humidity') }}: {{ weather.main.humidity }}%</p>

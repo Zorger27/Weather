@@ -24,6 +24,15 @@ import OpenWeather from "@/components/other/OpenWeather.vue";
 
     this.setOpenGraphTags(metaDescription, title, description, imageUrl, url);
     this.setPageTitle(mainTitle);
+
+    const savedCity = localStorage.getItem('weatherCity');
+    if (savedCity) {
+      this.cityName = savedCity;
+      this.callUpdateCityName(savedCity);
+    } else {
+      this.cityName = this.$t("cities.Kyiv");
+      this.callUpdateCityName(this.cityName);
+    }
   },
   methods: {
     changeOpenWeatherView() {
@@ -40,6 +49,7 @@ import OpenWeather from "@/components/other/OpenWeather.vue";
       }
     },
     callUpdateCityName(cityName: string) {
+      this.cityName = cityName;
       if (this.$refs.myWeatherComponent) {
         this.$refs.myWeatherComponent.updateCityName(cityName);
       }
@@ -99,7 +109,7 @@ export default class Project4 extends Vue {};
       //align-items: center;
       font-size: 2.3rem;
       margin: 0.7rem 0;
-      color: darkgreen;
+      color: black;
       .fa-solid.fa-sun, .fa-solid.fa-cloud {
         margin: 0 0.5rem;
       }
@@ -130,6 +140,7 @@ export default class Project4 extends Vue {};
       label {
         font-weight: bold;
         font-size: 2rem;
+        color: black;
       }
       input[type="text"] {
         flex: 1 0 auto;
