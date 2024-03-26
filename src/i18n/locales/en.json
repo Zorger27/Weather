@@ -44,7 +44,9 @@
   "direction": "Direction of the wind",
   "humidity": "Humidity",
   "pressure": "Pressure",
-  "error": "Failed to load weather data.",
+  "error": "Failed to load weather data",
+  "unknown-city": "Unknown City!",
+  "unknown-country": "Unknown country",
   "project1": {
     "name": "Weather forecast Newest",
     "disc": "Description"

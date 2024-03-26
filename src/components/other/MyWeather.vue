@@ -87,7 +87,8 @@ interface WeatherData {
         this.weather = response.data;
       } catch (error) {
         console.error("Error fetching weather data:", error);
-        this.error = `${this.$t('error')}: ${error}`;
+        // this.error = `${this.$t('error')}: Unknown City!`;
+        this.error = `${this.$t('error')}: ${this.$t('unknown-city')}`;
       } finally {
         this.loading = false;
       }
@@ -113,7 +114,8 @@ interface WeatherData {
       if (this.countryMapping[countryCode] && this.countryMapping[countryCode][language]) {
         return this.countryMapping[countryCode][language];
       } else {
-        return "Unknown country";
+        // return "Unknown country";
+        return this.$t('unknown-country');
       }
     },
   },
@@ -135,7 +137,7 @@ export default class MyWeather extends Vue {}
       <div v-if="loading">{{ $t('loading') }}</div>
       <div v-if="error">{{ error }}</div>
       <div class="indicators" v-if="weather">
-        <p>{{ $t('country') }}: {{ getCountryName(weather.sys.country) }}</p>
+        <p class="country">{{ $t('country') }}: {{ getCountryName(weather.sys.country) }}</p>
         <p>{{ $t('sunrise') }}: {{ formatTime(weather.sys.sunrise) }}</p>
         <p>{{ $t('sunset') }}: {{ formatTime(weather.sys.sunset) }}</p>
         <line></line>
@@ -186,8 +188,10 @@ export default class MyWeather extends Vue {}
       padding: 0 1rem 0 1rem;
 
       p {margin: 0.5rem;}
-      line {
-        width: 100%;
+      line {width: 100%;}
+      .country {
+        font-style: italic;
+        color: #780485;
       }
     }
   }
@@ -204,6 +208,11 @@ export default class MyWeather extends Vue {}
       .indicators {
         padding: 0;
         p {margin: 0.2rem 0;}
+        .country {
+          font-size: 1rem;
+          font-style: italic;
+          color: #780485;
+        }
       }
     }
   }

@@ -44,7 +44,9 @@
   "direction": "Dirección del viento",
   "humidity": "Humedad",
   "pressure": "Presión",
-  "error": "No se pudieron cargar los datos meteorológicos.",
+  "error": "No se pudieron cargar los datos meteorológicos",
+  "unknown-city": "¡Ciudad desconocida!",
+  "unknown-country": "Pais desconocido",
   "project1": {
     "name": "El Tiempo más nuevo",
     "disc": "Descripción"
