@@ -238,7 +238,7 @@ export default class MyWeather extends Vue {}
     .indicators {
       color: black;
       font-size: 1.9rem;
-      font-weight: bold;
+      //font-weight: bold;
       display: inline-flex;
       flex-direction: column;
       align-items: flex-start;
