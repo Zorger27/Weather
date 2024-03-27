@@ -208,6 +208,10 @@ export default class MyWeather extends Vue {}
   .name {color: darkblue;}
   .price {color: darkmagenta;}
   .title {font-size: 2.3rem; color: darkblue;}
+  background-image: url("@/assets/background/background05.webp");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .inner {
   display: inline-flex;
@@ -271,6 +275,8 @@ export default class MyWeather extends Vue {}
     flex-direction: column;
 
     .city {
+      padding: 0 0.5rem;
+      margin: 0.7rem 0;
       h1 {
         font-size: 1.7rem;
         margin: 0.5rem 0 0.2rem 0;
@@ -282,7 +288,7 @@ export default class MyWeather extends Vue {}
         padding: 0;
         p {margin: 0.2rem 0;}
         .country {
-          font-size: 1.1rem;
+          font-size: 1.3rem;
           font-style: italic;
           color: #780485;
         }
