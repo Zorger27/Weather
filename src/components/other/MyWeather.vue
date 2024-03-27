@@ -288,7 +288,7 @@ export default class MyWeather extends Vue {}
         padding: 0;
         p {margin: 0.2rem 0;}
         .country {
-          font-size: 1.3rem;
+          font-size: 1.25rem;
           font-style: italic;
           color: #780485;
         }
