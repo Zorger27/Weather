@@ -204,9 +204,10 @@ export default class MyWeather extends Vue {}
 
 <style lang="scss" scoped>
 .table {
-  .title {
-    font-size: 2.3rem;
-  }
+  .nomer {color: black;}
+  .name {color: darkblue;}
+  .price {color: darkmagenta;}
+  .title {font-size: 2.3rem;}
 }
 .inner {
   display: inline-flex;
@@ -222,7 +223,7 @@ export default class MyWeather extends Vue {}
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
     //box-shadow: 3px 3px 4px 0 lightgrey;
-    background-image: url("@/assets/background/background02.webp");
+    background-image: url("@/assets/background/background05.webp");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -259,6 +260,7 @@ export default class MyWeather extends Vue {}
 @media (max-width: 768px) {
   .table {
     margin-bottom: 0.7rem;
+    .title {font-size: 1.8rem;}
   }
 
   .inner {
