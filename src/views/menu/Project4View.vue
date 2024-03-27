@@ -12,6 +12,7 @@ import OpenWeather from "@/components/other/OpenWeather.vue";
       OpenWeatherView: false,
       cityName: '' as string,
       cities: [] as string[],
+      tableView: false,
     }
   },
   mounted() {
@@ -35,6 +36,9 @@ import OpenWeather from "@/components/other/OpenWeather.vue";
     }
   },
   methods: {
+    changeView() {
+      this.tableView = !this.tableView;
+    },
     clearCity() {
       this.cityName = "";
       // Устанавливаем фокус на поле ввода
@@ -72,7 +76,8 @@ export default class Project4 extends Vue {};
     <CurrentDate></CurrentDate>
     <div class="inner">
       <h2 class="title">{{ $t('title') }}<i @click="changeOpenWeatherView"><span
-        :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i></h2>
+        :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i> <i
+        @click="changeView"><span :class="['fa', tableView ? 'fa-list' : 'fa-th']"></span></i></h2>
       <div class="input-group">
         <label for="city">{{ $t('city') }}</label>
         <input type="text" id="city" v-model="cityName" @input="callHandleCityInputChange(cityName)" @keydown.enter="callGetWeather"
@@ -85,7 +90,7 @@ export default class Project4 extends Vue {};
       </div>
     </div>
     <div class="container">
-      <MyWeather ref="myWeatherComponent" class="myWidget" :cityName="cityName" @update:cities="cities = $event"></MyWeather>
+      <MyWeather ref="myWeatherComponent" class="myWidget" :cityName="cityName" @update:cities="cities = $event" :table-view="tableView"></MyWeather>
       <OpenWeather v-show="OpenWeatherView" class="widget" :widgetId="15" :cityId="'703448'"/>
     </div>
   </div>

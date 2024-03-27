@@ -97,6 +97,10 @@ interface WeatherData {
       type: String,
       required: true
     },
+    tableView: {
+      type: Boolean,
+      required: true
+    },
   },
   components: {CurrentDate},
 })
@@ -104,11 +108,80 @@ export default class MyWeather extends Vue {}
 </script>
 
 <template>
-  <div class="inner">
+  <div v-if="tableView && weather && weather.sys" class="table">
+    <table>
+      <thead>
+      <tr>
+        <th class="title" colspan="3">{{ $t('h1') }} {{ cityName }}</th>
+      </tr>
+      <tr>
+        <th>№</th>
+        <th>Показатель</th>
+        <th>Значение</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="nomer">1</td>
+        <td class="name">{{ $t('country') }}</td>
+        <td class="price">{{ getCountryName(weather.sys.country) }}</td>
+      </tr>
+      <tr>
+        <td class="nomer">2</td>
+        <td class="name">{{ $t('sunrise') }}</td>
+        <td class="price">{{ formatTime(weather.sys.sunrise) }}</td>
+      </tr>
+      <tr>
+        <td class="nomer">3</td>
+        <td class="name">{{ $t('sunset') }}</td>
+        <td class="price">{{ formatTime(weather.sys.sunset) }}</td>
+      </tr>
+      <tr>
+        <td class="nomer">4</td>
+        <td class="name">{{ $t('temp') }}</td>
+        <td class="price">{{ weather.main.temp }}°C</td>
+      </tr>
+      <tr>
+        <td class="nomer">5</td>
+        <td class="name">{{ $t('feels') }}</td>
+        <td class="price">{{ weather.main.feels_like }}°</td>
+      </tr>
+      <tr>
+        <td class="nomer">6</td>
+        <td class="name">{{ $t('temp-min') }}</td>
+        <td class="price">{{ weather.main.temp_min }}°C</td>
+      </tr>
+      <tr>
+        <td class="nomer">7</td>
+        <td class="name">{{ $t('temp-max') }}</td>
+        <td class="price">{{ weather.main.temp_max }}°C</td>
+      </tr>
+      <tr>
+        <td class="nomer">8</td>
+        <td class="name">{{ $t('speed') }}</td>
+        <td class="price">{{ weather.wind.speed }} m/s</td>
+      </tr>
+      <tr>
+        <td class="nomer">9</td>
+        <td class="name">{{ $t('direction') }}</td>
+        <td class="price">{{ weather.wind.deg }}°</td>
+      </tr>
+      <tr>
+        <td class="nomer">10</td>
+        <td class="name">{{ $t('humidity') }}</td>
+        <td class="price">{{ weather.main.humidity }}%</td>
+      </tr>
+      <tr>
+        <td class="nomer">11</td>
+        <td class="name">{{ $t('pressure') }}</td>
+        <td class="price">{{ weather.main.pressure }} hPa</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div v-else-if="!tableView && weather" class="inner">
     <div class="city">
       <h1>{{ $t('h1') }}{{ this.cityName }}</h1>
-      <div v-if="loading">{{ $t('loading') }}</div>
-      <div v-if="error">{{ error }}</div>
       <div class="indicators" v-if="weather">
         <p class="country">{{ $t('country') }}: {{ getCountryName(weather.sys.country) }}</p>
         <p>{{ $t('sunrise') }}: {{ formatTime(weather.sys.sunrise) }}</p>
@@ -125,9 +198,16 @@ export default class MyWeather extends Vue {}
       </div>
     </div>
   </div>
+  <div v-if="loading" class="error">{{ $t('loading') }}</div>
+  <div v-if="error" class="error">{{ error }}</div>
 </template>
 
 <style lang="scss" scoped>
+.table {
+  .title {
+    font-size: 2.3rem;
+  }
+}
 .inner {
   display: inline-flex;
   justify-content: center;
@@ -169,8 +249,18 @@ export default class MyWeather extends Vue {}
     }
   }
 }
+.error {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: darkred;
+  margin: 1rem auto;
+}
 
 @media (max-width: 768px) {
+  .table {
+    margin-bottom: 0.7rem;
+  }
+
   .inner {
     display: flex;
     flex-direction: column;
@@ -191,6 +281,12 @@ export default class MyWeather extends Vue {}
         }
       }
     }
+  }
+  .error {
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: darkred;
+    margin: 1rem auto;
   }
 }
 </style>
