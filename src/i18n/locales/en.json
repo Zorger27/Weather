@@ -47,6 +47,8 @@
   "error": "Failed to load weather data",
   "unknown-city": "Unknown City!",
   "unknown-country": "Unknown country",
+  "indicator": "Indicator",
+  "value": "Value",
   "project1": {
     "name": "Weather forecast Newest",
     "disc": "Description"

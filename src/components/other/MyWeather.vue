@@ -116,8 +116,8 @@ export default class MyWeather extends Vue {}
       </tr>
       <tr>
         <th>№</th>
-        <th>Показатель</th>
-        <th>Значение</th>
+        <th>{{ $t('indicator') }}</th>
+        <th>{{ $t('value') }}</th>
       </tr>
       </thead>
       <tbody>
@@ -207,7 +207,7 @@ export default class MyWeather extends Vue {}
   .nomer {color: black;}
   .name {color: darkblue;}
   .price {color: darkmagenta;}
-  .title {font-size: 2.3rem;}
+  .title {font-size: 2.3rem; color: darkblue;}
 }
 .inner {
   display: inline-flex;

@@ -47,6 +47,8 @@
   "error": "No se pudieron cargar los datos meteorológicos",
   "unknown-city": "¡Ciudad desconocida!",
   "unknown-country": "Pais desconocido",
+  "indicator": "Indicador",
+  "value": "Valor",
   "project1": {
     "name": "El Tiempo más nuevo",
     "disc": "Descripción"
