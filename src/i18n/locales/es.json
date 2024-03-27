@@ -22,7 +22,7 @@
   "city": "Ciudad:",
   "get": "Obtener",
   "btn": "Obtener datos",
-  "loading": "sobreprima...",
+  "loading": "cargando...",
   "cities": {
     "Kyiv": "Kyiv",
     "Odessa": "Odesa",

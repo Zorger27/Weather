@@ -230,18 +230,21 @@ export default class MyWeather extends Vue {}
 
     h1 {
       text-decoration: underline;
+      font-size: 2.2rem;
       color: darkblue;
       margin: 0.5rem;
     }
 
     .indicators {
+      color: black;
+      font-size: 1.9rem;
       font-weight: bold;
       display: inline-flex;
       flex-direction: column;
       align-items: flex-start;
-      padding: 0 1rem 0 1rem;
+      padding: 0 1rem;
 
-      p {margin: 0.5rem;}
+      p {margin: 0.3rem 0.5rem;}
       line {width: 100%;}
       .country {
         font-style: italic;
@@ -274,10 +277,12 @@ export default class MyWeather extends Vue {}
       }
 
       .indicators {
+        font-size: 1.4rem;
+        font-weight: normal;
         padding: 0;
         p {margin: 0.2rem 0;}
         .country {
-          font-size: 1rem;
+          font-size: 1.1rem;
           font-style: italic;
           color: #780485;
         }
