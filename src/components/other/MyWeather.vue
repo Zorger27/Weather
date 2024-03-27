@@ -2,6 +2,7 @@
 import axios from "axios";
 import {Options, Vue} from "vue-class-component";
 import CurrentDate from "@/components/util/CurrentDate.vue";
+import countryMappingMixin from "@/assets/file/countryMappingMixin";
 
 interface WeatherData {
   main: {
@@ -23,41 +24,13 @@ interface WeatherData {
   },
 }
 @Options({
+  mixins: [countryMappingMixin],
   data() {
     return {
       loading: true as boolean | undefined,
       error: null as string | null | undefined,
       weather: null as WeatherData | null,
       cityName: '' as string,
-      countryMapping: {
-        "UA": {"uk": "Україна", "en": "Ukraine", "es": "Ucrania"},
-        "US": {"uk": "Сполучені Штати", "en": "United States", "es": "Estados Unidos"},
-        "GB": {"uk": "Велика Британія", "en": "Great Britain", "es": "Gran Bretaña"},
-        "DE": {"uk": "Німеччина", "en": "Germany", "es": "Alemania"},
-        "FR": {"uk": "Франція", "en": "France", "es": "Francia"},
-        "IT": {"uk": "Італія", "en": "Italy", "es": "Italia"},
-        "ES": {"uk": "Іспанія", "en": "Spain", "es": "España"},
-        "TR": {"uk": "Туреччина", "en": "Turkey", "es": "Turquía"},
-        "AE": {"uk": "Об'єднані Арабські Емірати", "en": "United Arab Emirates", "es": "Emiratos Árabes Unidos"},
-        "CN": {"uk": "Китай", "en": "China", "es": "China"},
-        "JP": {"uk": "Японія", "en": "Japan", "es": "Japón"},
-        "BR": {"uk": "Бразилія", "en": "Brazil", "es": "Brasil"},
-        "IN": {"uk": "Індія", "en": "India", "es": "India"},
-        "RU": {"uk": "Росія", "en": "Russia", "es": "Rusia"},
-        "CA": {"uk": "Канада", "en": "Canada", "es": "Canadá"},
-        "AU": {"uk": "Австралія", "en": "Australia", "es": "Australia"},
-        "MX": {"uk": "Мексика", "en": "Mexico", "es": "México"},
-        "ZA": {"uk": "Південна Африка", "en": "South Africa", "es": "Sudáfrica"},
-        "KR": {"uk": "Південна Корея", "en": "South Korea", "es": "Corea del Sur"},
-        "SE": {"uk": "Швеція", "en": "Sweden", "es": "Suecia"},
-        "CH": {"uk": "Швейцарія", "en": "Switzerland", "es": "Suiza"},
-        "PL": {"uk": "Польща", "en": "Poland", "es": "Polonia"},
-        "HU": {"uk": "Угорщина", "en": "Hungary", "es": "Hungría"},
-        "CZ": {"uk": "Чехія", "en": "Czech Republic", "es": "República Checa"},
-        "LV": {"uk": "Латвія", "en": "Latvia", "es": "Letonia"},
-        "LT": {"uk": "Литва", "en": "Lithuania", "es": "Lituania"},
-        "EE": {"uk": "Естонія", "en": "Estonia", "es": "Estonia"},
-      }
     };
   },
   computed: {
