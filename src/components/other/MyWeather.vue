@@ -2,7 +2,7 @@
 import axios from "axios";
 import {Options, Vue} from "vue-class-component";
 import CurrentDate from "@/components/util/CurrentDate.vue";
-import countryMappingMixin from "@/assets/file/countryMappingMixin";
+import {mapGetters} from "vuex";
 
 interface WeatherData {
   main: {
@@ -24,7 +24,6 @@ interface WeatherData {
   },
 }
 @Options({
-  mixins: [countryMappingMixin],
   data() {
     return {
       loading: true as boolean | undefined,
@@ -38,6 +37,14 @@ interface WeatherData {
       return ["Kyiv", "Odessa", "Kharkiv", "Dubai", "Antalya", "Shanghai", "Benidorm", "Valencia"].map((city, index) => {
         return this.$t(`cities.${city}`, index);
       });
+    },
+    ...mapGetters({
+      vuexGetCountryName: 'getCountryName' // 'getCountryName' это имя геттера в Vuex хранилище
+    }),
+    countryName() {
+      const countryCode = this.weather.sys.country;
+      const language = this.$i18n.locale; // Получение текущего языка интерфейса
+      return this.vuexGetCountryName(countryCode, language);
     }
   },
   mounted() {
@@ -60,7 +67,6 @@ interface WeatherData {
         this.weather = response.data;
       } catch (error) {
         console.error("Error fetching weather data:", error);
-        // this.error = `${this.$t('error')}: Unknown City!`;
         this.error = `${this.$t('error')}: ${this.$t('unknown-city')}`;
       } finally {
         this.loading = false;
@@ -81,15 +87,6 @@ interface WeatherData {
     formatTime(timestamp: number) {
       const date = new Date(timestamp * 1000); // Преобразование в миллисекунды
       return date.toLocaleTimeString(); // Возвращает строку времени в формате по умолчанию
-    },
-    getCountryName(countryCode: string) {
-      const language = this.$i18n.locale;
-      if (this.countryMapping[countryCode] && this.countryMapping[countryCode][language]) {
-        return this.countryMapping[countryCode][language];
-      } else {
-        // return "Unknown country";
-        return this.$t('unknown-country');
-      }
     },
   },
   props: {
@@ -124,7 +121,7 @@ export default class MyWeather extends Vue {}
       <tr>
         <td class="nomer">1</td>
         <td class="name">{{ $t('country') }}</td>
-        <td class="price">{{ getCountryName(weather.sys.country) }}</td>
+        <td class="price">{{ countryName }}</td>
       </tr>
       <tr>
         <td class="nomer">2</td>
@@ -183,7 +180,7 @@ export default class MyWeather extends Vue {}
     <div class="city">
       <h1>{{ $t('h1') }}{{ this.cityName }}</h1>
       <div class="indicators" v-if="weather">
-        <p class="country">{{ $t('country') }}: {{ getCountryName(weather.sys.country) }}</p>
+        <p class="country">{{ $t('country') }}: {{ countryName }}</p>
         <p>{{ $t('sunrise') }}: {{ formatTime(weather.sys.sunrise) }}</p>
         <p>{{ $t('sunset') }}: {{ formatTime(weather.sys.sunset) }}</p>
         <line></line>

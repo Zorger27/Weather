@@ -39,7 +39,10 @@ table {border-collapse: collapse;}
     a:hover {color: #2e768d;}
   }
   .code {color: darkgoldenrod;}
-  .price {text-align: right;color: deeppink;max-width: 230px;}
+  .price {
+    text-align: right;
+    color: deeppink;
+    max-width: 320px;}
 }
 
 .fa, .fas, .fa-solid {cursor: pointer;}
