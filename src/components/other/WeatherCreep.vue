@@ -268,7 +268,7 @@ export default class CryptosCreep extends Vue {}
   }
 }
 .error {
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: bold;
   color: darkred;
   margin: 1rem auto;
@@ -277,11 +277,14 @@ export default class CryptosCreep extends Vue {}
 @media(max-width: 1020px) {
   .inner {
     .marquee {
-      .content {}
+      .content {
+        font-size: 1.6rem;
+        padding: 0.4rem;
       }
     }
+  }
   .error {
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: bold;
     color: darkred;
     margin: 1rem auto;
@@ -291,11 +294,14 @@ export default class CryptosCreep extends Vue {}
   .inner {
     margin-bottom: 0.5rem;
     .marquee {
-      .content {}
+      .content {
+        font-size: 1.5rem;
+        padding: 0.3rem;
+      }
     }
   }
   .error {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: darkred;
     margin: 1rem auto;
