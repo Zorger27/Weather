@@ -115,14 +115,14 @@ interface WeatherData {
         { key: this.$t('country'), value: this.countryName, style: 'font-weight: bold; color: blue; text-shadow: 1px 1px 2px green;' },
         { key: this.$t('sunrise'), value: this.formatTime(this.weather.sys.sunrise), style: 'color: darkgreen; font-style: italic;' },
         { key: this.$t('sunset'), value: this.formatTime(this.weather.sys.sunset), style: 'color: darkgreen; font-style: italic;' },
-        { key: this.$t('temp'), value: `${this.weather.main.temp}°C`, style: '' },
+        { key: this.$t('temp'), value: `${this.weather.main.temp}°C`, style: 'color: black;' },
         { key: this.$t('feels'), value: `${this.weather.main.feels_like}°C`, style: 'font-weight: bold; color: darkmagenta;text-shadow: 1px 1px 2px green;' },
-        { key: this.$t('temp-min'), value: `${this.weather.main.temp_min}°C`, style: '' },
-        { key: this.$t('temp-max'), value: `${this.weather.main.temp_max}°C`, style: '' },
-        { key: this.$t('speed'), value: `${this.weather.wind.speed} m/s`, style: '' },
-        { key: this.$t('direction'), value: `${this.weather.wind.deg}°`, style: '' },
-        { key: this.$t('humidity'), value: `${this.weather.main.humidity}%`, style: '' },
-        { key: this.$t('pressure'), value: `${this.weather.main.pressure} hPa`, style: '' }
+        { key: this.$t('temp-min'), value: `${this.weather.main.temp_min}°C`, style: 'color: black;' },
+        { key: this.$t('temp-max'), value: `${this.weather.main.temp_max}°C`, style: 'color: black;' },
+        { key: this.$t('speed'), value: `${this.weather.wind.speed} m/s`, style: 'color: black;' },
+        { key: this.$t('direction'), value: `${this.weather.wind.deg}°`, style: 'color: black;' },
+        { key: this.$t('humidity'), value: `${this.weather.main.humidity}%`, style: 'color: black;' },
+        { key: this.$t('pressure'), value: `${this.weather.main.pressure} hPa`, style: 'color: black;' }
       ];
 
       // Создаем HTML строку, добавляя стили и отступы к каждому элементу
