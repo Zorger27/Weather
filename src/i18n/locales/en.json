@@ -19,6 +19,7 @@
   },
   "title": "Weather forecast",
   "h1": "Weather in ",
+  "h2": "City",
   "city": "City:",
   "get": "Get",
   "btn": "Getting data",

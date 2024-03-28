@@ -1,7 +1,6 @@
 <script lang="ts">
 import axios from "axios";
 import {Options, Vue} from "vue-class-component";
-import CurrentDate from "@/components/util/CurrentDate.vue";
 import {mapGetters} from "vuex";
 
 interface WeatherData {
@@ -99,7 +98,7 @@ interface WeatherData {
       required: true
     },
   },
-  components: {CurrentDate},
+  components: {},
 })
 export default class MyWeather extends Vue {}
 </script>

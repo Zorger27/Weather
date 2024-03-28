@@ -19,6 +19,7 @@
   },
   "title": "El Tiempo",
   "h1": "Tiempo en ",
+  "h2": "Ciudad",
   "city": "Ciudad:",
   "get": "Obtener",
   "btn": "Obtener datos",
