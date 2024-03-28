@@ -37,6 +37,10 @@ import WeatherCreep from "@/components/other/WeatherCreep.vue";
   methods: {
     changeCrip() {
       this.cripView = !this.cripView;
+      // Если при переключении в режим бегущей строки данные уже должны быть загружены, вызываем загрузку
+      if (this.cripView) {
+        this.callGetWeather(); // Убедитесь, что этот метод корректно обрабатывает повторные загрузки данных
+      }
     },
     clearCity() {
       this.cityName = "";
@@ -44,16 +48,20 @@ import WeatherCreep from "@/components/other/WeatherCreep.vue";
       this.$refs.cityInput.focus();
     },
     callGetWeather() {
+      this.cripView = true;
+      this.speed = 1;
       if (this.$refs.myWeatherComponent) {
         this.$refs.myWeatherComponent.getWeather();
       }
     },
     callHandleCityInputChange(cityName: string) {
+      this.cripView = true;
       if (this.$refs.myWeatherComponent) {
         this.$refs.myWeatherComponent.handleCityInputChange(cityName);
       }
     },
     callUpdateCityName(cityName: string) {
+      this.cripView = true;
       this.cityName = cityName;
       if (this.$refs.myWeatherComponent) {
         this.$refs.myWeatherComponent.updateCityName(cityName);

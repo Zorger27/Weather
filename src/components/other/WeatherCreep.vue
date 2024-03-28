@@ -105,6 +105,8 @@ interface WeatherData {
         console.error("Error fetching weather data:", error);
         this.loading = false;
         this.error = `${this.$t('error')}: ${this.$t('unknown-city')}`;
+      } finally {
+        this.loading = false;
       }
     },
     updateWeatherMarqueeContent() {
