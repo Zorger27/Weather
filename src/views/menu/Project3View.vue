@@ -80,9 +80,6 @@ export default class Project3 extends Vue {
     <line></line>
     <CurrentDate></CurrentDate>
     <div class="inner">
-      <h2 class="title">{{ $t('title') }} <i @click="changeCrip"> <span :class="['fa-solid', cripView ? 'fa-cloud-sun' : 'fa-umbrella']"></span></i>
-        <input v-show="cripView" type="range" v-model.number="speed" min="0" max="6" step="0.2" />
-      </h2>
       <div class="input-group">
         <label for="city">{{ $t('city') }}</label>
         <input type="text" id="city" v-model="cityName" @input="callHandleCityInputChange(cityName)" @keydown.enter="callGetWeather"
@@ -93,6 +90,9 @@ export default class Project3 extends Vue {
           <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
         </select>
       </div>
+      <h2 class="title">{{ $t('title2') }} <i @click="changeCrip"> <span :class="['fa-solid', cripView ? 'fa-cloud-sun' : 'fa-umbrella']"></span></i>
+        <input v-show="cripView" type="range" v-model.number="speed" min="0" max="6" step="0.2" />
+      </h2>
     </div>
     <WeatherCreep ref="myWeatherComponent" class="creep" :cityName="cityName" @update:cities="cities = $event" :crip-view="cripView" :speed="speed"></WeatherCreep>
   </div>
@@ -114,8 +114,8 @@ export default class Project3 extends Vue {
     grid-row-gap: 0;
     grid-auto-flow: column;
     grid-template-areas:
-        "title"
-        "input-group";
+        "input-group"
+        "title";
 
     .title {
       grid-area: title;
@@ -124,7 +124,7 @@ export default class Project3 extends Vue {
       justify-content: center;
       align-items: center;
       font-size: 2.3rem;
-      margin: 0.7rem 0;
+      margin: 0;
       color: black;
       .fa-solid.fa-cloud-sun, .fa-solid.fa-umbrella {
         margin: 0 0.5rem;
@@ -139,6 +139,7 @@ export default class Project3 extends Vue {
     .input-group {
       grid-area: input-group;
       font-size: 2.3rem;
+      margin: 0.7rem 0;
       display: grid;
       grid-auto-flow: column;
       justify-content: center;
@@ -209,7 +210,7 @@ export default class Project3 extends Vue {
   .weather {
     .inner {
       .title {
-        font-size: 2.3rem;
+        font-size: 2.1rem;
       }
       .input-group {
         label, input, button, select {
@@ -217,7 +218,7 @@ export default class Project3 extends Vue {
           font-size: 1.2rem;
         }
         label {
-          font-size: 1.5rem;
+          font-size: 1.7rem;
         }
         button {
           margin: 0 0.2rem 0 0;
@@ -247,6 +248,7 @@ export default class Project3 extends Vue {
       }
 
       .input-group {
+        margin: 0.8rem 0 0;
         .get {
           display: none;
         }
