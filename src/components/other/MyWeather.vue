@@ -218,7 +218,7 @@ export default class MyWeather extends Vue {}
   .name {color: darkblue;}
   .price {color: darkmagenta;}
   .title {font-size: 2.3rem; color: darkblue;}
-  background-image: url("@/assets/background/background05.webp");
+  background-image: url("@/assets/background/background03.webp");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -237,7 +237,7 @@ export default class MyWeather extends Vue {}
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
     //box-shadow: 3px 3px 4px 0 lightgrey;
-    background-image: url("@/assets/background/background05.webp");
+    background-image: url("@/assets/background/background03.webp");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

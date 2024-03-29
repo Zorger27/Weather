@@ -40,7 +40,7 @@ export default class Project2 extends Vue {
     <h1>{{ $t('project2.name') }}</h1>
     <line></line>
     <CurrentDate></CurrentDate>
-    <h2 class="title">{{ $t('title2') }} <i @click="changeCrip3d"> <span :class="['fa-solid', cripView3d ? 'fa-cloud-sun-rain' : 'fa-snowflake']"></span></i></h2>
+    <h2 class="title">{{ $t('title1') }}<i @click="changeCrip3d"> <span :class="['fa-solid', cripView3d ? 'fa-cloud-sun-rain' : 'fa-snowflake']"></span></i></h2>
     <div class="creep3d">
       <WeatherCreep3d :crip-view3d="cripView3d"></WeatherCreep3d>
     </div>
@@ -50,9 +50,14 @@ export default class Project2 extends Vue {
 <style lang="scss" scoped>
 .weather {
   flex: 1 0 auto;
-  background: linear-gradient(to bottom, rgb(255, 240, 244), rgb(229, 251, 255)) no-repeat center;
+  //background: linear-gradient(to bottom, rgb(243, 255, 240), rgb(229, 251, 255)) no-repeat center;
+  background-image: url("@/assets/background/background03.webp");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 
-    .title {
+
+  .title {
       justify-content: center;
       align-items: center;
       font-size: 2.3rem;

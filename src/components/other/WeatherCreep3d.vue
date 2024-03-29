@@ -81,7 +81,7 @@ export default {
         const textWidth = geometry.boundingBox.max.x - geometry.boundingBox.min.x;
 
         const textureLoader = new THREE.TextureLoader();
-        textureLoader.load('/assets/img/textures/texture02.webp', function (texture) {
+        textureLoader.load('/assets/img/textures/texture03.webp', function (texture) {
           const material = new THREE.MeshBasicMaterial({ map: texture });
           const weatherObject = new THREE.Mesh(geometry, material);
 
