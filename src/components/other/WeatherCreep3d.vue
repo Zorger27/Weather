@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import {FontLoader} from "three/examples/jsm/loaders/FontLoader";
 import {TextGeometry} from "three/examples/jsm/geometries/TextGeometry";
 import axios from "axios";
+import {useI18n} from "vue-i18n";
 
 export default {
   name: 'WeatherCreep3d',
@@ -14,6 +15,7 @@ export default {
     },
   },
   setup() {
+    const { t } = useI18n();
     const marquee = ref(null);
     let scene, camera, renderer, initialWeatherIndicators = [];
 
@@ -28,15 +30,15 @@ export default {
 
         // Преобразуем ответ от API в массив данных о погоде
         const weatherArray = [
-          { key: 'City', value: response.data.name },
-          { key: 'Sunrise', value: new Date(response.data.sys.sunrise * 1000).toLocaleTimeString() },
-          { key: 'Sunset', value: new Date(response.data.sys.sunset * 1000).toLocaleTimeString() },
-          { key: 'Temperature', value: `${response.data.main.temp} °C` },
-          { key: 'Feels Like', value: `${response.data.main.feels_like} °C` },
+          { key: t('h2'), value: response.data.name },
+          { key: t('sunrise'), value: new Date(response.data.sys.sunrise * 1000).toLocaleTimeString() },
+          { key: t('sunset'), value: new Date(response.data.sys.sunset * 1000).toLocaleTimeString() },
+          { key: t('temp'), value: `${response.data.main.temp} °C` },
+          { key: t('feels'), value: `${response.data.main.feels_like}°C` },
           { key: 'Weather', value: response.data.weather[0].description },
-          { key: 'Wind Speed', value: `${response.data.wind.speed} m/s` },
-          { key: 'Pressure', value: `${response.data.main.pressure} hPa` },
-          { key: 'Humidity', value: `${response.data.main.humidity}%` },
+          { key: t('speed'), value: `${response.data.wind.speed} m/s` },
+          { key: t('pressure'), value: `${response.data.main.pressure} hPa` },
+          { key: t('humidity'), value: `${response.data.main.humidity}%` },
         ];
 
         // Перебираем полученные данные о погоде и создаем объекты для отображения в 3D
