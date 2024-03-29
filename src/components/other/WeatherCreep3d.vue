@@ -15,39 +15,33 @@ export default {
   },
   setup() {
     const marquee = ref(null);
-    let scene, camera, renderer, initialCryptos = [];
-    let cryptosName = [
-      { id: 'bitcoin', name: 'Bitcoin' },
-      { id: 'ethereum', name: 'Ethereum' },
-      { id: 'litecoin', name: 'Litecoin' },
-      { id: 'tether', name: 'Tether' },
-      { id: 'avalanche-2', name: 'Avalanche' },
-      { id: 'filecoin', name: 'Filecoin' },
-      { id: 'bitcoin-cash', name: 'Bitcoin Cash' },
-      { id: 'binancecoin', name: 'BNB' },
-      { id: 'dogecoin', name: 'Dogecoin' },
-      { id: 'ripple', name: 'XRP' },
-      { id: 'cardano', name: 'Cardano' },
-      { id: 'polkadot', name: 'Polkadot' },
-      { id: 'chainlink', name: 'Chainlink' },
-      { id: 'stellar', name: 'Stellar' },
-    ];
+    let scene, camera, renderer, initialWeatherIndicators = [];
 
-    const fetchExchangeRates = async () => {
+    const getWeather = async () => {
+
       try {
-        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin,tether,avalanche-2,filecoin,bitcoin-cash,binancecoin,dogecoin,ripple,cardano,polkadot,chainlink,stellar&vs_currencies=usd');
+        const openWeatherMapToken = process.env["VUE_APP_OPENWEATHERMAP_TOKEN"];
+        const response = await axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?q=Kyiv&units=metric&lang=ua&appid=${openWeatherMapToken}`
+        );
+        // this.weather = response.data; // Сохраняем данные о погоде напрямую из ответа
 
-        // Преобразуем ответ от API в массив данных о криптовалютах
-        const selectedCryptos = Object.keys(response.data).map((id) => ({
-          // Для каждой криптовалюты формируем объект с полями id, name и price
-          id, // Идентификатор криптовалюты (например, "bitcoin")
-          name: cryptosName.find((c) => c.id === id)?.name || '', // Имя криптовалюты
-          price: response.data[id].usd, // Цена криптовалюты в долларах США
-        }));
+        // Преобразуем ответ от API в массив данных о погоде
+        const weatherArray = [
+          { key: 'City', value: response.data.name },
+          { key: 'Sunrise', value: new Date(response.data.sys.sunrise * 1000).toLocaleTimeString() },
+          { key: 'Sunset', value: new Date(response.data.sys.sunset * 1000).toLocaleTimeString() },
+          { key: 'Temperature', value: `${response.data.main.temp} °C` },
+          { key: 'Feels Like', value: `${response.data.main.feels_like} °C` },
+          { key: 'Weather', value: response.data.weather[0].description },
+          { key: 'Wind Speed', value: `${response.data.wind.speed} m/s` },
+          { key: 'Pressure', value: `${response.data.main.pressure} hPa` },
+          { key: 'Humidity', value: `${response.data.main.humidity}%` },
+        ];
 
-        // Перебираем полученные данные о криптовалютах и создаем объекты для отображения в 3D
-        selectedCryptos.forEach((crypto) => {
-          createCryptosObject(crypto); // Вызываем функцию createCryptosObject для создания объекта криптовалюты
+        // Перебираем полученные данные о погоде и создаем объекты для отображения в 3D
+        weatherArray.forEach((weather) => {
+          createWeatherObject(weather); // Вызываем функцию createWeatherObject для создания объекта погоды
         });
 
       } catch (error) {
@@ -57,12 +51,12 @@ export default {
 
     let nextPositionX = 0; // Стартовая позиция для первого объекта
 
-    const createCryptosObject = (crypto) => {
-      const cryptosName = `${crypto.name} = ${crypto.price} usd`;
+    const createWeatherObject = (weather) => {
+      const weatherInd = `${weather.key} = ${weather.value}`;
       const loader = new FontLoader();
 
       loader.load('https://threejs.org/examples/fonts/droid/droid_serif_regular.typeface.json', (font) => {
-        const geometry = new TextGeometry(cryptosName, {
+        const geometry = new TextGeometry(weatherInd, {
           font: font,
           size: 0.2,
           height: 0.02,
@@ -74,22 +68,22 @@ export default {
         const textureLoader = new THREE.TextureLoader();
         textureLoader.load('/assets/background/background04.webp', function (texture) {
           const material = new THREE.MeshBasicMaterial({ map: texture });
-          const cryptosObject = new THREE.Mesh(geometry, material);
+          const weatherObject = new THREE.Mesh(geometry, material);
 
           const RotationAngleY = 27; // Угол в градусах
           const RotationAngleX = -5; // Угол в градусах
-          cryptosObject.rotation.y = THREE.MathUtils.degToRad(RotationAngleY)
-          cryptosObject.rotation.x = THREE.MathUtils.degToRad(RotationAngleX)
+          weatherObject.rotation.y = THREE.MathUtils.degToRad(RotationAngleY)
+          weatherObject.rotation.x = THREE.MathUtils.degToRad(RotationAngleX)
 
 
           // Выставляем позицию с учетом предыдущего текста и добавляем "пробелы" между ними
-          cryptosObject.position.x = nextPositionX;
+          weatherObject.position.x = nextPositionX;
           // Обновляем nextPositionX для следующего объекта, добавляем ширину текущего текста и примерное расстояние для двух "пробелов"
           // Подберите значение 0.2 (или другое) в зависимости от желаемого расстояния между словами
           nextPositionX += textWidth + 0.2;
 
-          initialCryptos.push(cryptosObject);
-          scene.add(cryptosObject);
+          initialWeatherIndicators.push(weatherObject);
+          scene.add(weatherObject);
         });
       });
     };
@@ -105,7 +99,7 @@ export default {
 
       marquee.value.appendChild(renderer.domElement);
 
-      fetchExchangeRates();
+      getWeather();
       animate();
     };
 
@@ -114,24 +108,24 @@ export default {
 
       const speed = 0.01; // Скорость движения
 
-      // Используем `initialCryptos` для итерации
-      initialCryptos.forEach((crypta, index) => {
+      // Используем `initialWeatherIndicators` для итерации
+      initialWeatherIndicators.forEach((indicator, index) => {
         // Двигаем объекты влево
-        crypta.position.x -= speed;
+        indicator.position.x -= speed;
 
         // Вычисляем правую границу видимости для объекта
-        if (crypta.geometry && crypta.geometry.boundingBox) {
-          const objectRightEdge = crypta.position.x + (crypta.geometry.boundingBox.max.x - crypta.geometry.boundingBox.min.x);
+        if (indicator.geometry && indicator.geometry.boundingBox) {
+          const objectRightEdge = indicator.position.x + (indicator.geometry.boundingBox.max.x - indicator.geometry.boundingBox.min.x);
 
           // Перемещаем объект обратно в начало, когда он полностью выходит за левую границу видимости
           if (objectRightEdge < -window.innerWidth / window.innerHeight * 2.5) {
-            const lastCrypta = initialCryptos[initialCryptos.length - 1];
+            const lastIndicator = initialWeatherIndicators[initialWeatherIndicators.length - 1];
             const spaceBetween = 0.2; // Желаемое расстояние между объектами
-            crypta.position.x = lastCrypta.position.x + lastCrypta.geometry.boundingBox.max.x - lastCrypta.geometry.boundingBox.min.x + spaceBetween;
+            indicator.position.x = lastIndicator.position.x + lastIndicator.geometry.boundingBox.max.x - lastIndicator.geometry.boundingBox.min.x + spaceBetween;
 
             // Переупорядочиваем массив, чтобы сохранить последовательность
-            initialCryptos.splice(index, 1);
-            initialCryptos.push(crypta);
+            initialWeatherIndicators.splice(index, 1);
+            initialWeatherIndicators.push(indicator);
           }
         }
       });
@@ -148,23 +142,13 @@ export default {
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     };
 
-    const updateCameraPosition = () => {
-      if (window.innerWidth <= 768) {
-        camera.position.z = 1.3;
-      } else {
-        camera.position.z = 1.3;
-      }
-    };
-
     window.addEventListener('resize', () => {
       onWindowResize();
-      updateCameraPosition();
     });
 
     onMounted(() => {
       init();
       onWindowResize();
-      updateCameraPosition();
     });
 
     onUnmounted(() => {
@@ -173,7 +157,7 @@ export default {
 
     return {
       marquee,
-      initialCryptos
+      initialWeatherIndicators
     };
   },
 }
