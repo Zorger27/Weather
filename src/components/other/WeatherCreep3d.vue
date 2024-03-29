@@ -17,16 +17,21 @@ export default {
   setup() {
     const { t } = useI18n();
     const marquee = ref(null);
+    const weather = ref(null);
+    const loading = ref(true);
+    const error = ref(null);
     let scene, camera, renderer, initialWeatherIndicators = [];
 
     const getWeather = async () => {
+      loading.value = true;
+      weather.value = null;
+      error.value = null;
 
       try {
         const openWeatherMapToken = process.env["VUE_APP_OPENWEATHERMAP_TOKEN"];
         const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?q=Kyiv&units=metric&lang=ua&appid=${openWeatherMapToken}`
         );
-        // this.weather = response.data; // Сохраняем данные о погоде напрямую из ответа
 
         // Преобразуем ответ от API в массив данных о погоде
         const weatherArray = [
@@ -51,14 +56,18 @@ export default {
         });
 
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching weather data:", error);
+        loading.value = false;
+        error.value = `${t('error')}: ${t('unknown-city')}`;
+      } finally {
+        loading.value = false;
       }
     };
 
     let nextPositionX = 0; // Стартовая позиция для первого объекта
 
     const createWeatherObject = (weather) => {
-      const weatherInd = `${weather.key} = ${weather.value}`;
+      const weatherInd = `${weather.key}: ${weather.value}`;
       const loader = new FontLoader();
 
       loader.load('https://threejs.org/examples/fonts/droid/droid_serif_regular.typeface.json', (font) => {
@@ -72,7 +81,7 @@ export default {
         const textWidth = geometry.boundingBox.max.x - geometry.boundingBox.min.x;
 
         const textureLoader = new THREE.TextureLoader();
-        textureLoader.load('/assets/background/background04.webp', function (texture) {
+        textureLoader.load('/assets/img/textures/texture02.webp', function (texture) {
           const material = new THREE.MeshBasicMaterial({ map: texture });
           const weatherObject = new THREE.Mesh(geometry, material);
 
