@@ -2,7 +2,7 @@
 import {Options, Vue} from 'vue-class-component';
 import {openGraphMixin} from "@/assets/ogimage/openGraphMixin";
 import CurrentDate from "@/components/util/CurrentDate.vue";
-import WeatherCreep3d from "@/components/other/WeatherCreep3d.vue";
+import WeatherCreep3d from "@/components/other/WeatherCreep3dV3.vue";
 
 @Options({
   mixins: [openGraphMixin],
@@ -85,9 +85,9 @@ export default class Project2 extends Vue {
         <h2 class="title">{{ $t('title2') }} <i @click="changeCrip3d"> <span :class="['fa-solid', cripView3d ? 'fa-cloud-sun-rain' : 'fa-snowflake']"></span></i>
       </h2>
     </div>
-    <div class="creep3d">
-      <WeatherCreep3d ref="myWeatherComponent" :cityName="cityName" @update:cities="cities = $event" :crip-view="cripView3d"></WeatherCreep3d>
-    </div>
+<!--    <div class="creep3d">-->
+<!--      <WeatherCreep3d ref="myWeatherComponent" :cityName="cityName" @update:cities="cities = $event" :crip-view3d="cripView3d"></WeatherCreep3d>-->
+<!--    </div>-->
   </div>
 </template>
 

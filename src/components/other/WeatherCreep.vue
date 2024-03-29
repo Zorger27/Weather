@@ -236,7 +236,7 @@ margin-right:0.5rem">:</span><span style="color: darkmagenta; font-weight: bold;
   },
   components: {},
 })
-export default class CryptosCreep extends Vue {}
+export default class WeatherCreep extends Vue {}
 </script>
 
 <template>

@@ -1,312 +1,223 @@
-<script lang="ts">
-import {Options, Vue} from "vue-class-component";
+<script>
+import { ref, onMounted, onUnmounted } from 'vue';
+import * as THREE from 'three';
+import {FontLoader} from "three/examples/jsm/loaders/FontLoader";
+import {TextGeometry} from "three/examples/jsm/geometries/TextGeometry";
 import axios from "axios";
-import {mapGetters} from "vuex";
 
-interface WeatherData {
-  main: {
-    temp: number;
-    feels_like: number;
-    temp_min: number;
-    temp_max: number;
-    humidity: number;
-    pressure: number;
-  };
-  wind: {
-    speed: number;
-    deg: number;
-  };
-  sys: {
-    country: string;
-    sunrise: number;
-    sunset: number;
-  },
-}
-@Options({
-  data() {
-    return {
-      loading: true as boolean | undefined,
-      error: null as string | null | undefined,
-      weather: null as WeatherData | null,
-      cityName: '' as string,
-      contentWidth: 0,
-      marqueeWidth: 0,
-      animationOffset: 0,
-      isAnimating: false,
-      animationFrameId: 0, // Идентификатор для requestAnimationFrame
-    };
-  },
-  computed: {
-    cities() {
-      return ["Kyiv", "Odessa", "Kharkiv", "Dubai", "Antalya", "Shanghai", "Benidorm", "Valencia"].map((city, index) => {
-        return this.$t(`cities.${city}`, index);
-      });
-    },
-    ...mapGetters({
-      vuexGetCountryName: 'getCountryName' // 'getCountryName' это имя геттера в Vuex хранилище
-    }),
-    countryName() {
-      const countryCode = this.weather.sys.country;
-      const language = this.$i18n.locale; // Получение текущего языка интерфейса
-      return this.vuexGetCountryName(countryCode, language);
-    }
-  },
-  mounted() {
-    if (this.cityName) {
-      // Вызываем getWeather только если cityName не пустое
-      this.getWeather().then(() => {
-        this.$nextTick(() => {
-          const content = this.$refs.marquee.querySelector('.content');
-          if (content) {
-            // Дублируем содержимое
-            const contentHTML = content.innerHTML;
-            content.innerHTML += contentHTML;
-            // Пересчитываем ширину после дублирования
-            this.calculateWidths();
-          }
-        });
-      });
-    }
-    this.$emit('update:cities', this.cities);
-    // Следим за событием прокрутки, чтобы приостанавливать и возобновлять анимацию
-    window.addEventListener('scroll', this.handleScroll);
-  },
-  beforeUnmount() {
-    if (this.animationFrameId) {
-      cancelAnimationFrame(this.animationFrameId);
-    }
-    window.removeEventListener('scroll', this.handleScroll);
-    window.removeEventListener('resize', this.calculateWidths);
-  },
-  watch: {
-    speed(newSpeed: number) {
-      // Обрабатываем изменение скорости
-      this.updateAnimationSpeed(newSpeed);
-    }
-  },
-  methods: {
-    async getWeather() {
-      this.loading = true;
-      this.weather = null;
-      this.error = null;
-
-      try {
-        const openWeatherMapToken = process.env["VUE_APP_OPENWEATHERMAP_TOKEN"];
-        const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${this.cityName}&units=metric&lang=ua&appid=${openWeatherMapToken}`
-        );
-        this.weather = response.data; // Сохраняем данные о погоде напрямую из ответа
-
-        // Обновляем DOM только после получения и обработки данных
-        await this.$nextTick(this.calculateWidths);
-        this.updateWeatherMarqueeContent(); // Метод для обновления содержимого бегущей строки
-        this.setupAnimationListener();
-      } catch (error) {
-        console.error("Error fetching weather data:", error);
-        this.loading = false;
-        this.error = `${this.$t('error')}: ${this.$t('unknown-city')}`;
-      } finally {
-        this.loading = false;
-      }
-    },
-    updateWeatherMarqueeContent() {
-      if (!this.weather) return;
-
-      const weatherInfo = [
-        { key: this.$t('h2'), value: this.cityName, style: 'font-weight: bold; color: red; text-shadow: 1px 1px 2px gray;' },
-        { key: this.$t('country'), value: this.countryName, style: 'font-weight: bold; color: blue; text-shadow: 1px 1px 2px gray;' },
-        { key: this.$t('sunrise'), value: this.formatTime(this.weather.sys.sunrise), style: '' },
-        { key: this.$t('sunset'), value: this.formatTime(this.weather.sys.sunset), style: '' },
-        { key: this.$t('temp'), value: `${this.weather.main.temp}°C`, style: '' },
-        { key: this.$t('feels'), value: `${this.weather.main.feels_like}°C`, style: '' },
-        { key: this.$t('temp-min'), value: `${this.weather.main.temp_min}°C`, style: '' },
-        { key: this.$t('temp-max'), value: `${this.weather.main.temp_max}°C`, style: '' },
-        { key: this.$t('speed'), value: `${this.weather.wind.speed} m/s`, style: '' },
-        { key: this.$t('direction'), value: `${this.weather.wind.deg}°`, style: '' },
-        { key: this.$t('humidity'), value: `${this.weather.main.humidity}%`, style: '' },
-        { key: this.$t('pressure'), value: `${this.weather.main.pressure} hPa`, style: '' }
-      ];
-
-      // Создаем HTML строку, добавляя стили и отступы к каждому элементу
-      const marqueeContent = weatherInfo.map(info => {
-        return `<span style="${info.style} margin-right: 2rem;"><span>${info.key}</span><span style="color: goldenrod;font-weight: bold;
-margin-right:0.5rem">:</span><span style="color: darkmagenta; font-weight: bold; text-shadow: 1px 1px 2px green;">${info.value}</span></span>`;
-      }).join('');
-
-      // Умножаем содержимое, чтобы заполнить бегущую строку
-      const repeatedContent = new Array(8).fill(marqueeContent).join('');
-
-      // Находим элемент .content и обновляем его HTML
-      const contentElement = this.$refs.marquee.querySelector('.content');
-      if (contentElement) {
-        contentElement.innerHTML = repeatedContent;
-        this.calculateWidths();
-      }
-    },
-    calculateWidths() {
-      const marquee = this.$refs.marquee as HTMLElement | null;
-      const content = marquee?.querySelector(".content") as HTMLElement | null;
-      if (marquee && content) {
-        this.marqueeWidth = marquee.offsetWidth;
-        this.contentWidth = content.offsetWidth;
-        // Устанавливаем начальное смещение таким образом, чтобы вторая копия была частично видима в конце первой копии
-        this.animationOffset = this.contentWidth;
-      }
-    },
-    setupAnimationListener() {
-      window.addEventListener("resize", this.calculateWidths);
-      this.animateMarquee();
-    },
-    animateMarquee() {
-      if (this.isAnimating) return; // Проверка, выполняется ли уже анимация
-      const step = () => {
-        // Проверяем, проскроллена ли полностью первая копия содержимого
-        if (this.animationOffset >= this.contentWidth) {
-          // Если да, сбрасываем смещение на начало
-          this.animationOffset = 0;
-          // this.animationOffset -= this.contentWidth
-        } else {
-          // Иначе продолжаем анимацию
-          this.animationOffset += this.speed;
-        }
-        const content = this.$refs.marquee?.querySelector(".content");
-        if (content) {
-          content.style.transform = `translateX(${-this.animationOffset}px)`;
-        }
-        if (this.isAnimating) {
-          this.animationFrameId = requestAnimationFrame(step);
-        }
-      };
-      this.isAnimating = true;
-      requestAnimationFrame(step);
-    },
-    pauseAnimation() {
-      // Приостановка анимации
-      this.isAnimating = false;
-      if (this.animationFrameId) {
-        cancelAnimationFrame(this.animationFrameId);
-      }
-    },
-    handleScroll() {
-      const marqueeRect = this.$refs.marquee.getBoundingClientRect();
-      if (marqueeRect.top < window.innerHeight && marqueeRect.bottom > 0) {
-        if (!this.isAnimating) {
-          this.animateMarquee();
-        }
-      } else {
-        if (this.isAnimating) {
-          this.pauseAnimation();
-        }
-      }
-    },
-    updateAnimationSpeed(newSpeed: number) {
-      if (this.speed !== newSpeed) {
-        this.speed = newSpeed; // Обновляем скорость в состоянии компонента
-        // Перезапускаем анимацию с новой скоростью
-        this.pauseAnimation();
-        this.animateMarquee();
-      }
-    },
-    saveCityToLocalStorage(city: string) {
-      localStorage.setItem("weatherCity", city);
-    },
-    handleCityInputChange(city: string) {
-      this.cityName = city;
-      this.saveCityToLocalStorage(city);
-    },
-    updateCityName(city: string) {
-      this.cityName = city;
-      this.getWeather();
-      this.saveCityToLocalStorage(city);
-    },
-    formatTime(timestamp: number) {
-      const date = new Date(timestamp * 1000); // Преобразование в миллисекунды
-      return date.toLocaleTimeString(); // Возвращает строку времени в формате по умолчанию
-    },
-  },
+export default {
+  name: 'WeatherCreep3d',
   props: {
-    cripView: {
+    cripView3d: {
       type: Boolean,
       required: true
     },
-    speed: {
-      type: Number,
-      default: 1,
-    },
   },
-  components: {},
-})
-export default class CryptosCreep extends Vue {}
+  setup() {
+    const marquee = ref(null);
+    let scene, camera, renderer, initialCryptos = [];
+    let cryptosName = [
+      { id: 'bitcoin', name: 'Bitcoin' },
+      { id: 'ethereum', name: 'Ethereum' },
+      { id: 'litecoin', name: 'Litecoin' },
+      { id: 'tether', name: 'Tether' },
+      { id: 'avalanche-2', name: 'Avalanche' },
+      { id: 'filecoin', name: 'Filecoin' },
+      { id: 'bitcoin-cash', name: 'Bitcoin Cash' },
+      { id: 'binancecoin', name: 'BNB' },
+      { id: 'dogecoin', name: 'Dogecoin' },
+      { id: 'ripple', name: 'XRP' },
+      { id: 'cardano', name: 'Cardano' },
+      { id: 'polkadot', name: 'Polkadot' },
+      { id: 'chainlink', name: 'Chainlink' },
+      { id: 'stellar', name: 'Stellar' },
+    ];
+
+    const fetchExchangeRates = async () => {
+      try {
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin,tether,avalanche-2,filecoin,bitcoin-cash,binancecoin,dogecoin,ripple,cardano,polkadot,chainlink,stellar&vs_currencies=usd');
+
+        // Преобразуем ответ от API в массив данных о криптовалютах
+        const selectedCryptos = Object.keys(response.data).map((id) => ({
+          // Для каждой криптовалюты формируем объект с полями id, name и price
+          id, // Идентификатор криптовалюты (например, "bitcoin")
+          name: cryptosName.find((c) => c.id === id)?.name || '', // Имя криптовалюты
+          price: response.data[id].usd, // Цена криптовалюты в долларах США
+        }));
+
+        // Перебираем полученные данные о криптовалютах и создаем объекты для отображения в 3D
+        selectedCryptos.forEach((crypto) => {
+          createCryptosObject(crypto); // Вызываем функцию createCryptosObject для создания объекта криптовалюты
+        });
+
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    let nextPositionX = 0; // Стартовая позиция для первого объекта
+
+    const createCryptosObject = (crypto) => {
+      const cryptosName = `${crypto.name} = ${crypto.price} usd`;
+      const loader = new FontLoader();
+
+      loader.load('https://threejs.org/examples/fonts/droid/droid_serif_regular.typeface.json', (font) => {
+        const geometry = new TextGeometry(cryptosName, {
+          font: font,
+          size: 0.2,
+          height: 0.02,
+        });
+
+        geometry.computeBoundingBox();
+        const textWidth = geometry.boundingBox.max.x - geometry.boundingBox.min.x;
+
+        const textureLoader = new THREE.TextureLoader();
+        textureLoader.load('/assets/background/background04.webp', function (texture) {
+          const material = new THREE.MeshBasicMaterial({ map: texture });
+          const cryptosObject = new THREE.Mesh(geometry, material);
+
+          const RotationAngleY = 27; // Угол в градусах
+          const RotationAngleX = -5; // Угол в градусах
+          cryptosObject.rotation.y = THREE.MathUtils.degToRad(RotationAngleY)
+          cryptosObject.rotation.x = THREE.MathUtils.degToRad(RotationAngleX)
+
+
+          // Выставляем позицию с учетом предыдущего текста и добавляем "пробелы" между ними
+          cryptosObject.position.x = nextPositionX;
+          // Обновляем nextPositionX для следующего объекта, добавляем ширину текущего текста и примерное расстояние для двух "пробелов"
+          // Подберите значение 0.2 (или другое) в зависимости от желаемого расстояния между словами
+          nextPositionX += textWidth + 0.2;
+
+          initialCryptos.push(cryptosObject);
+          scene.add(cryptosObject);
+        });
+      });
+    };
+
+    const init = () => {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 1.3;
+      renderer = new THREE.WebGLRenderer({alpha: true});
+      // renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      scene.add(camera);
+
+      marquee.value.appendChild(renderer.domElement);
+
+      fetchExchangeRates();
+      animate();
+    };
+
+    const animate = () => {
+      requestAnimationFrame(animate);
+
+      const speed = 0.01; // Скорость движения
+
+      // Используем `initialCryptos` для итерации
+      initialCryptos.forEach((crypta, index) => {
+        // Двигаем объекты влево
+        crypta.position.x -= speed;
+
+        // Вычисляем правую границу видимости для объекта
+        if (crypta.geometry && crypta.geometry.boundingBox) {
+          const objectRightEdge = crypta.position.x + (crypta.geometry.boundingBox.max.x - crypta.geometry.boundingBox.min.x);
+
+          // Перемещаем объект обратно в начало, когда он полностью выходит за левую границу видимости
+          if (objectRightEdge < -window.innerWidth / window.innerHeight * 2.5) {
+            const lastCrypta = initialCryptos[initialCryptos.length - 1];
+            const spaceBetween = 0.2; // Желаемое расстояние между объектами
+            crypta.position.x = lastCrypta.position.x + lastCrypta.geometry.boundingBox.max.x - lastCrypta.geometry.boundingBox.min.x + spaceBetween;
+
+            // Переупорядочиваем массив, чтобы сохранить последовательность
+            initialCryptos.splice(index, 1);
+            initialCryptos.push(crypta);
+          }
+        }
+      });
+
+      renderer.render(scene, camera);
+    };
+
+
+    const onWindowResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    };
+
+    const updateCameraPosition = () => {
+      if (window.innerWidth <= 768) {
+        camera.position.z = 1.3;
+      } else {
+        camera.position.z = 1.3;
+      }
+    };
+
+    window.addEventListener('resize', () => {
+      onWindowResize();
+      updateCameraPosition();
+    });
+
+    onMounted(() => {
+      init();
+      onWindowResize();
+      updateCameraPosition();
+    });
+
+    onUnmounted(() => {
+      renderer.dispose();
+    });
+
+    return {
+      marquee,
+      initialCryptos
+    };
+  },
+}
 </script>
 
 <template>
-  <div class="inner" v-if="cripView && weather">
-    <div ref="marquee" class="marquee">
-      <div class="content">
-        <!-- Вывод данных о погоде в бегущей строке -->
-      </div>
-    </div>
+  <div class="inner" v-show="cripView3d">
+    <div class="marquee" ref="marquee"></div>
   </div>
-  <div v-else-if="loading" class="error">{{ $t('loading') }}</div>
-  <div v-else class="error">{{ error }}</div>
+<!--  <div v-else-if="loading" class="error">{{ $t('loading') }}</div>-->
+<!--  <div v-else class="error">{{ error }}</div>-->
 </template>
 
 <style lang="scss" scoped>
 .inner {
-  margin-bottom: 1rem;
   overflow: hidden;
   position: relative;
+
   .marquee {
     overflow: hidden;
-    position: relative;
-    .content {
-      white-space: nowrap;
-      display: inline-block;
-      font-size: 2rem;
-      font-style: italic;
-      padding: 0.5rem;
-      margin: 0.5rem 1rem;
-    }
+    background: none;
   }
 }
-.error {
-  font-size: 2rem;
-  font-weight: bold;
-  color: darkred;
-  margin: 1rem auto;
-}
+//.error {
+//  font-size: 2rem;
+//  font-weight: bold;
+//  color: darkred;
+//  margin: 1rem auto;
+//}
 
-@media(max-width: 1020px) {
-  .inner {
-    .marquee {
-      .content {
-        font-size: 1.6rem;
-        padding: 0.4rem;
-      }
-    }
-  }
-  .error {
-    font-size: 1.6rem;
-    font-weight: bold;
-    color: darkred;
-    margin: 1rem auto;
-  }
-}
-@media (max-width: 768px) {
-  .inner {
-    margin-bottom: 0.5rem;
-    .marquee {
-      .content {
-        font-size: 1.5rem;
-        padding: 0.3rem;
-      }
-    }
-  }
-  .error {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: darkred;
-    margin: 1rem auto;
-  }
-}
+//@media(max-width: 1020px) {
+//  .error {
+//    font-size: 1.6rem;
+//    font-weight: bold;
+//    color: darkred;
+//    margin: 1rem auto;
+//  }
+//}
+//@media (max-width: 768px) {
+//  .error {
+//    font-size: 1.5rem;
+//    font-weight: bold;
+//    color: darkred;
+//    margin: 1rem auto;
+//  }
+//}
 </style>
