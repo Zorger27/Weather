@@ -63,12 +63,6 @@ export default {
           createWeatherObject(weather); // Вызываем функцию createWeatherObject для создания объекта погоды
         });
 
-        // if (countryCode.value) {
-        //   countryName.value = store.getters.getCountryName(countryCode.value, locale.value);
-        // }
-        // // Запустите анимацию после обновления названия страны
-        // animate();
-
       } catch (error) {
         console.error("Error fetching weather data:", error);
         loading.value = false;
@@ -108,6 +102,7 @@ export default {
         const textureLoader = new THREE.TextureLoader();
         textureLoader.load('/assets/img/textures/texture03.webp', function (texture) {
           const material = new THREE.MeshBasicMaterial({ map: texture });
+
           const weatherObject = new THREE.Mesh(geometry, material);
 
           const RotationAngleY = 27; // Угол в градусах
@@ -202,6 +197,7 @@ export default {
       error,
       countryName,
       getWeather, // Экспорт функции, если вы хотите вызывать ее из шаблона
+      initialWeatherIndicators,
     };
   },
 }
