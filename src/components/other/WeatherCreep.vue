@@ -12,6 +12,14 @@ interface WeatherData {
     humidity: number;
     pressure: number;
   };
+  weather: [
+    {
+      id: number,
+      main: string,
+      description: string,
+      icon: string
+    }
+  ];
   wind: {
     speed: number;
     deg: number;
@@ -117,6 +125,7 @@ interface WeatherData {
         { key: this.$t('country'), value: this.countryName, style: 'font-weight: bold; color: blue; text-shadow: 1px 1px 2px gray;' },
         { key: this.$t('sunrise'), value: this.formatTime(this.weather.sys.sunrise), style: '' },
         { key: this.$t('sunset'), value: this.formatTime(this.weather.sys.sunset), style: '' },
+        { key: this.$t('description'), value: `${this.weather.weather[0].description}`, style: '' },
         { key: this.$t('temp'), value: `${this.weather.main.temp}°C`, style: '' },
         { key: this.$t('feels'), value: `${this.weather.main.feels_like}°C`, style: '' },
         { key: this.$t('temp-min'), value: `${this.weather.main.temp_min}°C`, style: '' },

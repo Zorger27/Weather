@@ -38,6 +38,7 @@
   "country": "Country",
   "sunrise": "Sunrise",
   "sunset": "Sunset",
+  "description": "Description",
   "temp": "Temperature",
   "feels": "Feels like",
   "temp-min": "Min. temperature",

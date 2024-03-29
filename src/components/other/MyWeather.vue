@@ -12,6 +12,14 @@ interface WeatherData {
     humidity: number;
     pressure: number;
   };
+  weather: [
+    {
+      id: number,
+      main: string,
+      description: string,
+      icon: string
+    }
+  ];
   wind: {
     speed: number;
     deg: number;
@@ -134,41 +142,46 @@ export default class MyWeather extends Vue {}
       </tr>
       <tr>
         <td class="nomer">4</td>
+        <td class="name">{{ $t('description') }}</td>
+        <td class="price">{{ weather.weather[0].description }}</td>
+      </tr>
+      <tr>
+        <td class="nomer">5</td>
         <td class="name">{{ $t('temp') }}</td>
         <td class="price">{{ weather.main.temp }}°C</td>
       </tr>
       <tr>
-        <td class="nomer">5</td>
+        <td class="nomer">6</td>
         <td class="name">{{ $t('feels') }}</td>
         <td class="price">{{ weather.main.feels_like }}°</td>
       </tr>
       <tr>
-        <td class="nomer">6</td>
+        <td class="nomer">7</td>
         <td class="name">{{ $t('temp-min') }}</td>
         <td class="price">{{ weather.main.temp_min }}°C</td>
       </tr>
       <tr>
-        <td class="nomer">7</td>
+        <td class="nomer">8</td>
         <td class="name">{{ $t('temp-max') }}</td>
         <td class="price">{{ weather.main.temp_max }}°C</td>
       </tr>
       <tr>
-        <td class="nomer">8</td>
+        <td class="nomer">9</td>
         <td class="name">{{ $t('speed') }}</td>
         <td class="price">{{ weather.wind.speed }} m/s</td>
       </tr>
       <tr>
-        <td class="nomer">9</td>
+        <td class="nomer">10</td>
         <td class="name">{{ $t('direction') }}</td>
         <td class="price">{{ weather.wind.deg }}°</td>
       </tr>
       <tr>
-        <td class="nomer">10</td>
+        <td class="nomer">11</td>
         <td class="name">{{ $t('humidity') }}</td>
         <td class="price">{{ weather.main.humidity }}%</td>
       </tr>
       <tr>
-        <td class="nomer">11</td>
+        <td class="nomer">12</td>
         <td class="name">{{ $t('pressure') }}</td>
         <td class="price">{{ weather.main.pressure }} hPa</td>
       </tr>
@@ -183,6 +196,7 @@ export default class MyWeather extends Vue {}
         <p>{{ $t('sunrise') }}: {{ formatTime(weather.sys.sunrise) }}</p>
         <p>{{ $t('sunset') }}: {{ formatTime(weather.sys.sunset) }}</p>
         <line></line>
+        <p>{{ $t('description') }}: {{ weather.weather[0].description }}</p>
         <p>{{ $t('temp') }}: {{ weather.main.temp }}°C</p>
         <p>{{ $t('feels') }}: {{ weather.main.feels_like }}°C</p>
         <p>{{ $t('temp-min') }}: {{ weather.main.temp_min }}°C</p>

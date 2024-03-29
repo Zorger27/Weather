@@ -31,14 +31,18 @@ export default {
         // Преобразуем ответ от API в массив данных о погоде
         const weatherArray = [
           { key: t('h2'), value: response.data.name },
+          { key: t('country'), value: response.data.sys.country },
           { key: t('sunrise'), value: new Date(response.data.sys.sunrise * 1000).toLocaleTimeString() },
           { key: t('sunset'), value: new Date(response.data.sys.sunset * 1000).toLocaleTimeString() },
+          { key: t('description'), value: response.data.weather[0].description },
           { key: t('temp'), value: `${response.data.main.temp} °C` },
-          { key: t('feels'), value: `${response.data.main.feels_like}°C` },
-          { key: 'Weather', value: response.data.weather[0].description },
+          { key: t('feels'), value: `${response.data.main.feels_like} °C` },
+          { key: t('temp-min'), value: `${response.data.main.temp_min} °C` },
+          { key: t('temp-max'), value: `${response.data.main.temp_max} °C` },
           { key: t('speed'), value: `${response.data.wind.speed} m/s` },
-          { key: t('pressure'), value: `${response.data.main.pressure} hPa` },
+          { key: t('direction'), value: `${response.data.wind.deg}°` },
           { key: t('humidity'), value: `${response.data.main.humidity}%` },
+          { key: t('pressure'), value: `${response.data.main.pressure} hPa` },
         ];
 
         // Перебираем полученные данные о погоде и создаем объекты для отображения в 3D
