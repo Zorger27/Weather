@@ -61,7 +61,7 @@ export default class Project2 extends Vue {
       justify-content: center;
       align-items: center;
       font-size: 2.3rem;
-      margin: 0;
+      margin: 0 0 1rem 0;
       color: black;
       .fa-solid.fa-cloud-sun-rain, .fa-solid.fa-snowflake {
         margin: 0 0.5rem;
@@ -75,7 +75,7 @@ export default class Project2 extends Vue {
     }
 
     .creep3d {
-      max-height: 20vh;
+      max-height: 22vh;
       max-width: 100%;
       position: relative;
       overflow: hidden;
@@ -100,14 +100,14 @@ export default class Project2 extends Vue {
       justify-content: center;
       align-items: center;
       font-size: 2rem;
-      margin: 0.5rem 0 0;
+      margin: 0.5rem 0;
       .fa-solid.fa-cloud-sun-rain, .fa-solid.fa-snowflake {
         margin: 0 0.5rem;
       }
     }
 
     .creep3d {
-      max-height: 20vh;
+      max-height: 22vh;
     }
   }
 }

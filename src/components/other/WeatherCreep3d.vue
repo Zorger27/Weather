@@ -1,10 +1,11 @@
 <script>
-import { ref, onMounted, onUnmounted } from 'vue';
+import {ref, onMounted, onUnmounted, watch} from 'vue';
 import * as THREE from 'three';
 import {FontLoader} from "three/examples/jsm/loaders/FontLoader";
 import {TextGeometry} from "three/examples/jsm/geometries/TextGeometry";
 import axios from "axios";
 import {useI18n} from "vue-i18n";
+import { useStore } from 'vuex';
 
 export default {
   name: 'WeatherCreep3d',
@@ -15,28 +16,35 @@ export default {
     },
   },
   setup() {
-    const { t } = useI18n();
+    const { t, locale } = useI18n();
+    const store = useStore(); // Хранилище Vuex
     const marquee = ref(null);
     const weather = ref(null);
     const loading = ref(true);
     const error = ref(null);
+    const countryCode = ref(''); // Объявляем здесь, чтобы было доступно везде в setup()
+    const countryName = ref(''); // Переменная для хранения имени страны
     let scene, camera, renderer, initialWeatherIndicators = [];
 
     const getWeather = async () => {
       loading.value = true;
       weather.value = null;
       error.value = null;
-
       try {
         const openWeatherMapToken = process.env["VUE_APP_OPENWEATHERMAP_TOKEN"];
         const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?q=Kyiv&units=metric&lang=ua&appid=${openWeatherMapToken}`
         );
 
+        // Обновляем countryCode
+        countryCode.value = response.data.sys.country;
+        // Обновляем countryName в зависимости от полученного countryCode и текущего языка интерфейса
+        countryName.value = store.getters.getCountryName(countryCode.value, locale.value);
+
         // Преобразуем ответ от API в массив данных о погоде
         const weatherArray = [
           { key: t('h2'), value: response.data.name },
-          { key: t('country'), value: response.data.sys.country },
+          { key: t('country'), value: countryName.value },
           { key: t('sunrise'), value: new Date(response.data.sys.sunrise * 1000).toLocaleTimeString() },
           { key: t('sunset'), value: new Date(response.data.sys.sunset * 1000).toLocaleTimeString() },
           { key: t('description'), value: response.data.weather[0].description },
@@ -55,6 +63,12 @@ export default {
           createWeatherObject(weather); // Вызываем функцию createWeatherObject для создания объекта погоды
         });
 
+        // if (countryCode.value) {
+        //   countryName.value = store.getters.getCountryName(countryCode.value, locale.value);
+        // }
+        // // Запустите анимацию после обновления названия страны
+        // animate();
+
       } catch (error) {
         console.error("Error fetching weather data:", error);
         loading.value = false;
@@ -63,6 +77,17 @@ export default {
         loading.value = false;
       }
     };
+
+    // Следим за изменениями locale, чтобы обновлять countryName
+    watch(locale, (newLocale) => {
+      // Теперь проверка на countryCode.value актуальна, так как countryCode объявлено вне getWeather
+      if (countryCode.value) {
+        countryName.value = store.getters.getCountryName(countryCode.value, newLocale);
+      }
+    });
+
+    // Вызываем getWeather при инициализации
+    getWeather();
 
     let nextPositionX = 0; // Стартовая позиция для первого объекта
 
@@ -172,7 +197,11 @@ export default {
 
     return {
       marquee,
-      initialWeatherIndicators
+      weather,
+      loading,
+      error,
+      countryName,
+      getWeather, // Экспорт функции, если вы хотите вызывать ее из шаблона
     };
   },
 }
