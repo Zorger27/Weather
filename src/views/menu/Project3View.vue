@@ -239,7 +239,7 @@ export default class Project3 extends Vue {
         align-items: center;
         font-size: 2rem;
         margin: 0.5rem 0 0;
-        .fa-solid.fa-sun, .fa-solid.fa-cloud {
+        .fa-solid.fa-cloud-sun, .fa-solid.fa-umbrella {
           margin: 0 0.5rem;
         }
       }
