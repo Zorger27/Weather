@@ -36,6 +36,9 @@ import OpenWeather from "@/components/other/OpenWeather.vue";
     }
   },
   methods: {
+    changeOpenWeatherView() {
+      this.OpenWeatherView = !this.OpenWeatherView;
+    },
     changeView() {
       this.tableView = !this.tableView;
     },
@@ -43,9 +46,6 @@ import OpenWeather from "@/components/other/OpenWeather.vue";
       this.cityName = "";
       // Устанавливаем фокус на поле ввода
       this.$refs.cityInput.focus();
-    },
-    changeOpenWeatherView() {
-      this.OpenWeatherView = !this.OpenWeatherView;
     },
     callGetWeather() {
       if (this.$refs.myWeatherComponent) {
@@ -92,7 +92,7 @@ export default class Project4 extends Vue {};
     </div>
     <div class="container">
       <MyWeather ref="myWeatherComponent" class="myWidget" :cityName="cityName" @update:cities="cities = $event" :table-view="tableView"></MyWeather>
-      <OpenWeather v-show="OpenWeatherView" class="widget" :widgetId="15" :cityId="'703448'"/>
+      <OpenWeather v-if="OpenWeatherView" class="widget" :widgetId="15" :cityId="'703448'"/>
     </div>
   </div>
 </template>

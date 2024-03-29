@@ -113,23 +113,24 @@ interface WeatherData {
       if (!this.weather) return;
 
       const weatherInfo = [
-        { key: this.$t('h2'), value: this.cityName, style: 'font-weight: bold; color: red; text-shadow: 1px 1px 2px green;' },
-        { key: this.$t('country'), value: this.countryName, style: 'font-weight: bold; color: blue; text-shadow: 1px 1px 2px green;' },
-        { key: this.$t('sunrise'), value: this.formatTime(this.weather.sys.sunrise), style: 'color: darkgreen; font-style: italic;' },
-        { key: this.$t('sunset'), value: this.formatTime(this.weather.sys.sunset), style: 'color: darkgreen; font-style: italic;' },
-        { key: this.$t('temp'), value: `${this.weather.main.temp}°C`, style: 'color: black;' },
-        { key: this.$t('feels'), value: `${this.weather.main.feels_like}°C`, style: 'font-weight: bold; color: darkmagenta;text-shadow: 1px 1px 2px green;' },
-        { key: this.$t('temp-min'), value: `${this.weather.main.temp_min}°C`, style: 'color: black;' },
-        { key: this.$t('temp-max'), value: `${this.weather.main.temp_max}°C`, style: 'color: black;' },
-        { key: this.$t('speed'), value: `${this.weather.wind.speed} m/s`, style: 'color: black;' },
-        { key: this.$t('direction'), value: `${this.weather.wind.deg}°`, style: 'color: black;' },
-        { key: this.$t('humidity'), value: `${this.weather.main.humidity}%`, style: 'color: black;' },
-        { key: this.$t('pressure'), value: `${this.weather.main.pressure} hPa`, style: 'color: black;' }
+        { key: this.$t('h2'), value: this.cityName, style: 'font-weight: bold; color: red; text-shadow: 1px 1px 2px gray;' },
+        { key: this.$t('country'), value: this.countryName, style: 'font-weight: bold; color: blue; text-shadow: 1px 1px 2px gray;' },
+        { key: this.$t('sunrise'), value: this.formatTime(this.weather.sys.sunrise), style: '' },
+        { key: this.$t('sunset'), value: this.formatTime(this.weather.sys.sunset), style: '' },
+        { key: this.$t('temp'), value: `${this.weather.main.temp}°C`, style: '' },
+        { key: this.$t('feels'), value: `${this.weather.main.feels_like}°C`, style: '' },
+        { key: this.$t('temp-min'), value: `${this.weather.main.temp_min}°C`, style: '' },
+        { key: this.$t('temp-max'), value: `${this.weather.main.temp_max}°C`, style: '' },
+        { key: this.$t('speed'), value: `${this.weather.wind.speed} m/s`, style: '' },
+        { key: this.$t('direction'), value: `${this.weather.wind.deg}°`, style: '' },
+        { key: this.$t('humidity'), value: `${this.weather.main.humidity}%`, style: '' },
+        { key: this.$t('pressure'), value: `${this.weather.main.pressure} hPa`, style: '' }
       ];
 
       // Создаем HTML строку, добавляя стили и отступы к каждому элементу
       const marqueeContent = weatherInfo.map(info => {
-        return `<span style="${info.style} margin-right: 2rem;">${info.key}: ${info.value}</span>`;
+        return `<span style="${info.style} margin-right: 2rem;"><span>${info.key}</span><span style="color: goldenrod;font-weight: bold;
+margin-right:0.5rem">:</span><span style="color: darkmagenta; font-weight: bold; text-shadow: 1px 1px 2px green;">${info.value}</span></span>`;
       }).join('');
 
       // Умножаем содержимое, чтобы заполнить бегущую строку
@@ -262,6 +263,7 @@ export default class CryptosCreep extends Vue {}
       white-space: nowrap;
       display: inline-block;
       font-size: 2rem;
+      font-style: italic;
       padding: 0.5rem;
       margin: 0.5rem 1rem;
     }

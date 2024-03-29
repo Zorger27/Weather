@@ -39,7 +39,7 @@ import WeatherCreep from "@/components/other/WeatherCreep.vue";
       this.cripView = !this.cripView;
       // Если при переключении в режим бегущей строки данные уже должны быть загружены, вызываем загрузку
       if (this.cripView) {
-        this.callGetWeather(); // Убедитесь, что этот метод корректно обрабатывает повторные загрузки данных
+        this.callGetWeather();
       }
     },
     clearCity() {
@@ -48,20 +48,17 @@ import WeatherCreep from "@/components/other/WeatherCreep.vue";
       this.$refs.cityInput.focus();
     },
     callGetWeather() {
-      this.cripView = true;
       this.speed = 1;
       if (this.$refs.myWeatherComponent) {
         this.$refs.myWeatherComponent.getWeather();
       }
     },
     callHandleCityInputChange(cityName: string) {
-      this.cripView = true;
       if (this.$refs.myWeatherComponent) {
         this.$refs.myWeatherComponent.handleCityInputChange(cityName);
       }
     },
     callUpdateCityName(cityName: string) {
-      this.cripView = true;
       this.cityName = cityName;
       if (this.$refs.myWeatherComponent) {
         this.$refs.myWeatherComponent.updateCityName(cityName);
@@ -80,7 +77,7 @@ export default class Project3 extends Vue {
     <line></line>
     <CurrentDate></CurrentDate>
     <div class="inner">
-      <div class="input-group">
+      <div class="input-group" v-show="cripView">
         <label for="city">{{ $t('city') }}</label>
         <input type="text" id="city" v-model="cityName" @input="callHandleCityInputChange(cityName)" @keydown.enter="callGetWeather"
                ref="cityInput"> <i title="Clear" @click="clearCity" class="fas fa-trash-alt"></i>
