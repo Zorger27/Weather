@@ -168,7 +168,6 @@ export default {
       renderer.render(scene, camera);
     };
 
-
     const onWindowResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
@@ -206,9 +205,9 @@ export default {
 <template>
   <div class="inner" v-show="cripView3d">
     <div class="marquee" ref="marquee"></div>
+    <div v-if="loading" class="error">{{ $t('loading') }}</div>
+    <div v-else class="error">{{ error }}</div>
   </div>
-<!--  <div v-else-if="loading" class="error">{{ $t('loading') }}</div>-->
-<!--  <div v-else class="error">{{ error }}</div>-->
 </template>
 
 <style lang="scss" scoped>
