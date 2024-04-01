@@ -1,5 +1,5 @@
 <script>
-import {ref, onMounted, onUnmounted, watch} from 'vue';
+import {ref, onMounted, onUnmounted, watch, computed} from 'vue';
 import * as THREE from 'three';
 import {FontLoader} from "three/examples/jsm/loaders/FontLoader";
 import {TextGeometry} from "three/examples/jsm/geometries/TextGeometry";
@@ -14,8 +14,12 @@ export default {
       type: Boolean,
       required: true
     },
+    cityName: {
+      type: String,
+    },
   },
-  setup() {
+  emits: ['update:cityName', 'update:cities'],
+  setup(props, { emit }) {
     const { t, locale } = useI18n();
     const store = useStore(); // Хранилище Vuex
     const marquee = ref(null);
@@ -26,6 +30,43 @@ export default {
     const countryName = ref(''); // Переменная для хранения имени страны
     let scene, camera, renderer, initialWeatherIndicators = [];
 
+    // Вычисляемое свойство для городов
+    const cities = computed(() => {
+      return ["Kyiv", "Odessa", "Kharkiv", "Dubai", "Antalya", "Shanghai", "Benidorm", "Valencia"].map(city => {
+        return t(`cities.${city}`);
+      });
+    });
+
+    // Следим за изменениями locale, чтобы обновлять countryName
+    watch(locale, (newLocale) => {
+      // Теперь проверка на countryCode.value актуальна, так как countryCode объявлено вне getWeather
+      if (countryCode.value) {
+        countryName.value = store.getters.getCountryName(countryCode.value, newLocale);
+      }
+    });
+    watch(() => props.cityName, (newCityName) => {
+      // Здесь можно обработать изменение города.
+      // Например, обновить локальные данные, повторно запросить данные о погоде и т.д.
+      handleCityInputChange(newCityName);
+      updateCityName(newCityName);
+      getWeather();
+    });
+
+    const saveCityToLocalStorage = (city) => {
+      localStorage.setItem("weatherCity", city);
+    };
+    const handleCityInputChange = (city) => {
+      // Эмитируем событие вместе с новым значением города
+      emit('update:cityName', city);
+      saveCityToLocalStorage(city);
+    };
+    const updateCityName = (city) => {
+      props.cityName = city;
+      emit('update:cities', cities.value);
+      getWeather();
+      saveCityToLocalStorage(city);
+    };
+
     const getWeather = async () => {
       loading.value = true;
       weather.value = null;
@@ -33,7 +74,7 @@ export default {
       try {
         const openWeatherMapToken = process.env["VUE_APP_OPENWEATHERMAP_TOKEN"];
         const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?q=Kyiv&units=metric&lang=ua&appid=${openWeatherMapToken}`
+          `https://api.openweathermap.org/data/2.5/weather?q=${props.cityName}&units=metric&lang=ua&appid=${openWeatherMapToken}`
         );
 
         // Обновляем countryCode
@@ -43,18 +84,18 @@ export default {
 
         // Преобразуем ответ от API в массив данных о погоде
         const weatherArray = [
-          { key: t('h2'), value: response.data.name },
+          { key: t('h2'), value: props.cityName },
           { key: t('country'), value: countryName.value },
           { key: t('sunrise'), value: new Date(response.data.sys.sunrise * 1000).toLocaleTimeString() },
           { key: t('sunset'), value: new Date(response.data.sys.sunset * 1000).toLocaleTimeString() },
           { key: t('description'), value: response.data.weather[0].description },
-          { key: t('temp'), value: `${response.data.main.temp} °C` },
-          { key: t('feels'), value: `${response.data.main.feels_like} °C` },
-          { key: t('temp-min'), value: `${response.data.main.temp_min} °C` },
-          { key: t('temp-max'), value: `${response.data.main.temp_max} °C` },
-          { key: t('speed'), value: `${response.data.wind.speed} m/s` },
-          { key: t('direction'), value: `${response.data.wind.deg}°` },
-          { key: t('humidity'), value: `${response.data.main.humidity}%` },
+          // { key: t('temp'), value: `${response.data.main.temp} °C` },
+          // { key: t('feels'), value: `${response.data.main.feels_like} °C` },
+          // { key: t('temp-min'), value: `${response.data.main.temp_min} °C` },
+          // { key: t('temp-max'), value: `${response.data.main.temp_max} °C` },
+          // { key: t('speed'), value: `${response.data.wind.speed} m/s` },
+          // { key: t('direction'), value: `${response.data.wind.deg}°` },
+          // { key: t('humidity'), value: `${response.data.main.humidity}%` },
           { key: t('pressure'), value: `${response.data.main.pressure} hPa` },
         ];
 
@@ -71,14 +112,6 @@ export default {
         loading.value = false;
       }
     };
-
-    // Следим за изменениями locale, чтобы обновлять countryName
-    watch(locale, (newLocale) => {
-      // Теперь проверка на countryCode.value актуальна, так как countryCode объявлено вне getWeather
-      if (countryCode.value) {
-        countryName.value = store.getters.getCountryName(countryCode.value, newLocale);
-      }
-    });
 
     // Вызываем getWeather при инициализации
     getWeather();
@@ -109,7 +142,6 @@ export default {
           const RotationAngleX = -5; // Угол в градусах
           weatherObject.rotation.y = THREE.MathUtils.degToRad(RotationAngleY)
           weatherObject.rotation.x = THREE.MathUtils.degToRad(RotationAngleX)
-
 
           // Выставляем позицию с учетом предыдущего текста и добавляем "пробелы" между ними
           weatherObject.position.x = nextPositionX;
@@ -195,7 +227,10 @@ export default {
       loading,
       error,
       countryName,
-      getWeather, // Экспорт функции, если вы хотите вызывать ее из шаблона
+      cities,
+      getWeather, // Экспорт функции, если вызывать её из шаблона
+      handleCityInputChange,
+      updateCityName,
       initialWeatherIndicators,
     };
   },
@@ -219,28 +254,32 @@ export default {
     overflow: hidden;
     background: none;
   }
+  .error {
+    font-size: 2rem;
+    font-weight: bold;
+    color: darkred;
+    margin: 1rem auto;
+  }
 }
-//.error {
-//  font-size: 2rem;
-//  font-weight: bold;
-//  color: darkred;
-//  margin: 1rem auto;
-//}
 
-//@media(max-width: 1020px) {
-//  .error {
-//    font-size: 1.6rem;
-//    font-weight: bold;
-//    color: darkred;
-//    margin: 1rem auto;
-//  }
-//}
-//@media (max-width: 768px) {
-//  .error {
-//    font-size: 1.5rem;
-//    font-weight: bold;
-//    color: darkred;
-//    margin: 1rem auto;
-//  }
-//}
+@media(max-width: 1020px) {
+  .inner {
+    .error {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: darkred;
+      margin: 1rem auto;
+    }
+  }
+}
+@media (max-width: 768px) {
+  .inner {
+    .error {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: darkred;
+      margin: 1rem auto;
+    }
+  }
+}
 </style>
