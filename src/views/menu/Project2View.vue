@@ -83,7 +83,6 @@ export default class Project2 extends Vue {};
       <h2 class="title">{{ $t('title1') }}<i @click="changeCrip3d"> <span :class="['fa-solid', cripView3d ? 'fa-cloud-sun-rain' : 'fa-snowflake']"></span></i></h2>
     </div>
     <div class="creep3d">
-<!--      <WeatherCreep3d :crip-view3d="cripView3d" :cityName="cityName" ref="weatherCreep3d"></WeatherCreep3d>-->
       <WeatherCreep3d :crip-view3d="cripView3d" :cityName="cityName" @update:cityName="cityName = $event" @update:cities="cities = $event" ref="weatherCreep3d"></WeatherCreep3d>
     </div>
   </div>

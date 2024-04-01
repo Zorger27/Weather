@@ -5,6 +5,7 @@ import CurrentDate from "@/components/util/CurrentDate.vue";
 import MyWeather from "@/components/other/MyWeather.vue";
 import OpenWeather from "@/components/other/OpenWeather.vue";
 import WeatherCreep from "@/components/other/WeatherCreep.vue";
+import WeatherCreep3d from "@/components/other/WeatherCreep3d.vue";
 
 @Options({
   mixins: [openGraphMixin],
@@ -16,6 +17,7 @@ import WeatherCreep from "@/components/other/WeatherCreep.vue";
       tableView: false,
       cripView: false,
       speed: 1,
+      cripView3d: false,
     }
   },
   mounted() {
@@ -52,6 +54,9 @@ import WeatherCreep from "@/components/other/WeatherCreep.vue";
         this.callGetWeather();
       }
     },
+    changeCrip3d() {
+      this.cripView3d = !this.cripView3d;
+    },
     clearCity() {
       this.cityName = "";
       // Устанавливаем фокус на поле ввода
@@ -59,23 +64,26 @@ import WeatherCreep from "@/components/other/WeatherCreep.vue";
     },
     callGetWeather() {
       this.speed = 1;
-      if (this.$refs.myWeatherComponent) {
+      if (this.$refs.myWeatherComponent && this.$refs.weatherCreep3d) {
         this.$refs.myWeatherComponent.getWeather();
+        this.$refs.weatherCreep3d.getWeather();
       }
     },
     callHandleCityInputChange(cityName: string) {
-      if (this.$refs.myWeatherComponent) {
+      if (this.$refs.myWeatherComponent && this.$refs.weatherCreep3d) {
         this.$refs.myWeatherComponent.handleCityInputChange(cityName);
+        this.$refs.weatherCreep3d.handleCityInputChange(cityName);
       }
     },
     callUpdateCityName(cityName: string) {
       this.cityName = cityName;
-      if (this.$refs.myWeatherComponent) {
+      if (this.$refs.myWeatherComponent && this.$refs.weatherCreep3d) {
         this.$refs.myWeatherComponent.updateCityName(cityName);
+        this.$refs.weatherCreep3d.updateCityName(cityName);
       }
     },
   },
-  components: {WeatherCreep, OpenWeather, MyWeather, CurrentDate},
+  components: {WeatherCreep3d, WeatherCreep, OpenWeather, MyWeather, CurrentDate},
 })
 export default class Project1 extends Vue {
 };
@@ -99,12 +107,16 @@ export default class Project1 extends Vue {
       </div>
       <h2 class="title">{{ $t('title2') }}<i title="OpenWeather icon" @click="changeOpenWeatherView"><span
         :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i> <i
-        @click="changeView"><span :class="['fa', tableView ? 'fa-list' : 'fa-th']"></span></i>
+        @click="changeView"><span :class="['fa', tableView ? 'fa-list' : 'fa-th']"></span></i> <i
+        @click="changeCrip3d"> <span :class="['fa-solid', cripView3d ? 'fa-cloud-sun-rain' : 'fa-snowflake']"></span></i>
 <!--        <i style="margin-left: 0.5rem" @click="changeCrip"> <span :class="['fa-solid', cripView ? 'fa-cloud-sun' : 'fa-umbrella']"></span></i>-->
 <!--        <input v-show="cripView" type="range" v-model.number="speed" min="0" max="6" step="0.2" />-->
       </h2>
     </div>
-<!--    <WeatherCreep ref="weatherCreepComponent" class="creep" :cityName="cityName" @update:cities="cities = $event" :crip-view="cripView" :speed="speed"></WeatherCreep>-->
+    <div class="creep3d">
+      <WeatherCreep3d :crip-view3d="cripView3d" :cityName="cityName" @update:cityName="cityName = $event" @update:cities="cities = $event" ref="weatherCreep3d"></WeatherCreep3d>
+    </div>
+    <!--    <WeatherCreep ref="weatherCreepComponent" class="creep" :cityName="cityName" @update:cities="cities = $event" :crip-view="cripView" :speed="speed"></WeatherCreep>-->
     <div class="container">
       <MyWeather ref="myWeatherComponent" class="myWidget" :cityName="cityName" @update:cities="cities = $event" :table-view="tableView"></MyWeather>
       <OpenWeather v-if="OpenWeatherView" class="widget" :widgetId="15" :cityId="'703448'"/>
@@ -141,17 +153,11 @@ export default class Project1 extends Vue {
       margin: 0;
       color: black;
 
-      .fa-solid.fa-sun, .fa-solid.fa-cloud {
-        margin: 0 0.5rem;
-      }
+      .fa-solid.fa-sun, .fa-solid.fa-cloud {margin: 0 0.5rem;}
+      .fa-solid.fa-cloud-sun-rain, .fa-solid.fa-snowflake {margin: 0 0.5rem;}
 
-      .fa-solid.fa-sun:hover {
-        color: gold;
-      }
-
-      .fa-solid.fa-cloud:hover {
-        color: blue;
-      }
+      .fa-solid.fa-sun:hover {color: gold;}
+      .fa-solid.fa-cloud:hover {color: blue;}
     }
 
     .input-group {
@@ -250,6 +256,17 @@ export default class Project1 extends Vue {
   }
 
   .creep {background: none;}
+
+  .creep3d {
+    max-height: 25vh;
+    max-width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+  }
 }
 
 @media(max-width: 1020px) {
@@ -331,6 +348,9 @@ export default class Project1 extends Vue {
           margin: 0;
         }
       }
+    }
+    .creep3d {
+      max-height: 25vh;
     }
   }
 }
