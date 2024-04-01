@@ -49,19 +49,19 @@ import WeatherCreep from "@/components/other/WeatherCreep.vue";
     },
     callGetWeather() {
       this.speed = 1;
-      if (this.$refs.myWeatherComponent) {
-        this.$refs.myWeatherComponent.getWeather();
+      if (this.$refs.weatherCreep) {
+        this.$refs.weatherCreep.getWeather();
       }
     },
     callHandleCityInputChange(cityName: string) {
-      if (this.$refs.myWeatherComponent) {
-        this.$refs.myWeatherComponent.handleCityInputChange(cityName);
+      if (this.$refs.weatherCreep) {
+        this.$refs.weatherCreep.handleCityInputChange(cityName);
       }
     },
     callUpdateCityName(cityName: string) {
       this.cityName = cityName;
-      if (this.$refs.myWeatherComponent) {
-        this.$refs.myWeatherComponent.updateCityName(cityName);
+      if (this.$refs.weatherCreep) {
+        this.$refs.weatherCreep.updateCityName(cityName);
       }
     },
   },
@@ -91,7 +91,7 @@ export default class Project3 extends Vue {
         <input v-show="cripView" type="range" v-model.number="speed" min="0" max="6" step="0.2" />
       </h2>
     </div>
-    <WeatherCreep ref="myWeatherComponent" class="creep" :cityName="cityName" @update:cities="cities = $event" :crip-view="cripView" :speed="speed"></WeatherCreep>
+    <WeatherCreep ref="weatherCreep" class="creep" :cityName="cityName" @update:cities="cities = $event" :crip-view="cripView" :speed="speed"></WeatherCreep>
   </div>
 </template>
 
