@@ -113,8 +113,8 @@ export default class Project1 extends Vue {
         <i title="Open Weather module" @click="changeOpenWeatherView"><span
         :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i> <i title="Change view"
         @click="changeView"><span :class="['fa', tableView ? 'fa-list' : 'fa-th']"></span></i> <i title="3D Creeping line"
-        @click="changeCrip3d"> <span :class="['fa-solid', cripView3d ? 'fa-cloud-sun-rain' : 'fa-snowflake']"></span></i>
-        <i title="Creeping line" @click="changeCrip"> <span :class="['fa-solid', cripView ? 'fa-cloud-sun' : 'fa-umbrella']"></span></i>
+        @click="changeCrip3d"> <span :class="['fa-solid', cripView3d ? 'fa-cloud-sun' : 'fa-snowflake']"></span></i>
+        <i title="Creeping line" @click="changeCrip"> <span :class="['fa-solid', cripView ? 'fa-cloud-sun-rain' : 'fa-umbrella']"></span></i>
         <input v-show="cripView" type="range" v-model.number="speed" min="0" max="6" step="0.2" />
       </h2>
     </div>
@@ -159,7 +159,7 @@ export default class Project1 extends Vue {
       color: black;
 
       .fa-solid.fa-sun, .fa-solid.fa-cloud {margin: 0 0.5rem;}
-      .fa-solid.fa-cloud-sun-rain, .fa-solid.fa-snowflake {margin: 0 0.5rem;}
+      .fa-solid.fa-cloud-sun, .fa-solid.fa-snowflake {margin: 0 0.5rem;}
 
       .fa-solid.fa-sun:hover {color: gold;}
       .fa-solid.fa-cloud:hover {color: blue;}

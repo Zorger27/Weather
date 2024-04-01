@@ -80,7 +80,7 @@ export default class Project2 extends Vue {};
           <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
         </select>
       </div>
-      <h2 class="title">{{ $t('title1') }}<i @click="changeCrip3d"> <span :class="['fa-solid', cripView3d ? 'fa-cloud-sun-rain' : 'fa-snowflake']"></span></i></h2>
+      <h2 class="title">{{ $t('title1') }}<i @click="changeCrip3d"> <span :class="['fa-solid', cripView3d ? 'fa-cloud-sun' : 'fa-snowflake']"></span></i></h2>
     </div>
     <div class="creep3d">
       <WeatherCreep3d :crip-view3d="cripView3d" :cityName="cityName" @update:cityName="cityName = $event" @update:cities="cities = $event" ref="weatherCreep3d"></WeatherCreep3d>
@@ -117,10 +117,10 @@ export default class Project2 extends Vue {};
       font-size: 2.3rem;
       margin: 0 0 1rem 0;
       color: black;
-      .fa-solid.fa-cloud-sun-rain, .fa-solid.fa-snowflake {
+      .fa-solid.fa-cloud-sun, .fa-solid.fa-snowflake {
         margin: 0 0.5rem;
       }
-      .fa-solid.fa-cloud-sun-rain:hover {
+      .fa-solid.fa-cloud-sun:hover {
         color: gold;
       }
       .fa-solid.fa-snowflake:hover {
