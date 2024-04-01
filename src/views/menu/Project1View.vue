@@ -64,21 +64,24 @@ import WeatherCreep3d from "@/components/other/WeatherCreep3d.vue";
     },
     callGetWeather() {
       this.speed = 1;
-      if (this.$refs.myWeatherComponent && this.$refs.weatherCreep3d) {
+      if (this.$refs.myWeatherComponent && this.$refs.weatherCreep && this.$refs.weatherCreep3d) {
         this.$refs.myWeatherComponent.getWeather();
+        this.$refs.weatherCreep.getWeather();
         this.$refs.weatherCreep3d.getWeather();
       }
     },
     callHandleCityInputChange(cityName: string) {
-      if (this.$refs.myWeatherComponent && this.$refs.weatherCreep3d) {
+      if (this.$refs.myWeatherComponent && this.$refs.weatherCreep && this.$refs.weatherCreep3d) {
         this.$refs.myWeatherComponent.handleCityInputChange(cityName);
+        this.$refs.weatherCreep.handleCityInputChange(cityName);
         this.$refs.weatherCreep3d.handleCityInputChange(cityName);
       }
     },
     callUpdateCityName(cityName: string) {
       this.cityName = cityName;
-      if (this.$refs.myWeatherComponent && this.$refs.weatherCreep3d) {
+      if (this.$refs.myWeatherComponent && this.$refs.weatherCreep && this.$refs.weatherCreep3d) {
         this.$refs.myWeatherComponent.updateCityName(cityName);
+        this.$refs.weatherCreep.updateCityName(cityName);
         this.$refs.weatherCreep3d.updateCityName(cityName);
       }
     },
@@ -109,14 +112,14 @@ export default class Project1 extends Vue {
         :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i> <i
         @click="changeView"><span :class="['fa', tableView ? 'fa-list' : 'fa-th']"></span></i> <i
         @click="changeCrip3d"> <span :class="['fa-solid', cripView3d ? 'fa-cloud-sun-rain' : 'fa-snowflake']"></span></i>
-<!--        <i style="margin-left: 0.5rem" @click="changeCrip"> <span :class="['fa-solid', cripView ? 'fa-cloud-sun' : 'fa-umbrella']"></span></i>-->
-<!--        <input v-show="cripView" type="range" v-model.number="speed" min="0" max="6" step="0.2" />-->
+        <i style="margin-left: 0.5rem" @click="changeCrip"> <span :class="['fa-solid', cripView ? 'fa-cloud-sun' : 'fa-umbrella']"></span></i>
+        <input v-show="cripView" type="range" v-model.number="speed" min="0" max="6" step="0.2" />
       </h2>
     </div>
     <div class="creep3d">
       <WeatherCreep3d :crip-view3d="cripView3d" :cityName="cityName" @update:cityName="cityName = $event" @update:cities="cities = $event" ref="weatherCreep3d"></WeatherCreep3d>
     </div>
-    <!--    <WeatherCreep ref="weatherCreepComponent" class="creep" :cityName="cityName" @update:cities="cities = $event" :crip-view="cripView" :speed="speed"></WeatherCreep>-->
+    <WeatherCreep ref="weatherCreep" class="creep" :cityName="cityName" @update:cities="cities = $event" :crip-view="cripView" :speed="speed"></WeatherCreep>
     <div class="container">
       <MyWeather ref="myWeatherComponent" class="myWidget" :cityName="cityName" @update:cities="cities = $event" :table-view="tableView"></MyWeather>
       <OpenWeather v-if="OpenWeatherView" class="widget" :widgetId="15" :cityId="'703448'"/>
@@ -154,7 +157,7 @@ export default class Project1 extends Vue {
       color: black;
 
       .fa-solid.fa-sun, .fa-solid.fa-cloud {margin: 0 0.5rem;}
-      .fa-solid.fa-cloud-sun-rain, .fa-solid.fa-snowflake {margin: 0 0.5rem;}
+      .fa-solid.fa-cloud-sun-rain, .fa-solid.fa-snowflake {margin: 0 0 0 0.5rem;}
 
       .fa-solid.fa-sun:hover {color: gold;}
       .fa-solid.fa-cloud:hover {color: blue;}
