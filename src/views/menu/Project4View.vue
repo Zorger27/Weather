@@ -123,7 +123,7 @@ export default class Project4 extends Vue {};
       justify-content: center;
       align-items: center;
       font-size: 2.3rem;
-      margin: 0;
+      margin: 0 0 0.5rem 0;
       color: black;
       .fa-solid.fa-sun, .fa-solid.fa-cloud {
         margin: 0 0.5rem;
@@ -254,7 +254,7 @@ export default class Project4 extends Vue {};
         justify-content: center;
         align-items: center;
         font-size: 2rem;
-        margin: 0.5rem 0 0;
+        margin: 0.3rem 0 0.5rem;
         .fa-solid.fa-sun, .fa-solid.fa-cloud {
           margin: 0 0.5rem;
         }

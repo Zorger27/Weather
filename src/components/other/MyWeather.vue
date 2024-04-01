@@ -232,7 +232,7 @@ export default class MyWeather extends Vue {}
     display: inline-flex;
     flex-direction: column;
     padding: 0 1rem 1rem 1rem;
-    margin: 1rem;
+    margin-bottom: 1rem;
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
@@ -286,7 +286,7 @@ export default class MyWeather extends Vue {}
 
     .city {
       padding: 0 0.5rem;
-      margin: 0.7rem 0;
+      margin-bottom: 0.7rem;
       width: 21rem;
 
       h1 {

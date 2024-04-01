@@ -262,7 +262,7 @@ export default class WeatherCreep extends Vue {}
 
 <style lang="scss" scoped>
 .inner {
-  margin-bottom: 1rem;
+  //margin-bottom: 1rem;
   overflow: hidden;
   position: relative;
   .marquee {
@@ -274,7 +274,7 @@ export default class WeatherCreep extends Vue {}
       font-size: 2rem;
       font-style: italic;
       padding: 0.5rem;
-      margin: 0.5rem 1rem;
+      margin-top: 0.5rem;
     }
   }
 }

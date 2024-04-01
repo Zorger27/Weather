@@ -15,7 +15,7 @@ import WeatherCreep3d from "@/components/other/WeatherCreep3d.vue";
       cityName: '' as string,
       cities: [] as string[],
       tableView: false,
-      cripView: false,
+      cripView: true,
       speed: 1,
       cripView3d: false,
     }
@@ -108,11 +108,13 @@ export default class Project1 extends Vue {
           <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
         </select>
       </div>
-      <h2 class="title">{{ $t('title2') }}<i title="OpenWeather icon" @click="changeOpenWeatherView"><span
-        :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i> <i
-        @click="changeView"><span :class="['fa', tableView ? 'fa-list' : 'fa-th']"></span></i> <i
+      <h2 class="title">
+<!--        {{ $t('title2') }}-->
+        <i title="Open Weather module" @click="changeOpenWeatherView"><span
+        :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i> <i title="Change view"
+        @click="changeView"><span :class="['fa', tableView ? 'fa-list' : 'fa-th']"></span></i> <i title="3D Creeping line"
         @click="changeCrip3d"> <span :class="['fa-solid', cripView3d ? 'fa-cloud-sun-rain' : 'fa-snowflake']"></span></i>
-        <i style="margin-left: 0.5rem" @click="changeCrip"> <span :class="['fa-solid', cripView ? 'fa-cloud-sun' : 'fa-umbrella']"></span></i>
+        <i title="Creeping line" @click="changeCrip"> <span :class="['fa-solid', cripView ? 'fa-cloud-sun' : 'fa-umbrella']"></span></i>
         <input v-show="cripView" type="range" v-model.number="speed" min="0" max="6" step="0.2" />
       </h2>
     </div>
@@ -153,14 +155,15 @@ export default class Project1 extends Vue {
       justify-content: center;
       align-items: center;
       font-size: 2.3rem;
-      margin: 0;
+      margin: 0 0 0.5rem 0;
       color: black;
 
       .fa-solid.fa-sun, .fa-solid.fa-cloud {margin: 0 0.5rem;}
-      .fa-solid.fa-cloud-sun-rain, .fa-solid.fa-snowflake {margin: 0 0 0 0.5rem;}
+      .fa-solid.fa-cloud-sun-rain, .fa-solid.fa-snowflake {margin: 0 0.5rem;}
 
       .fa-solid.fa-sun:hover {color: gold;}
       .fa-solid.fa-cloud:hover {color: blue;}
+      .fa-solid.fa-umbrella:hover {color: purple;}
     }
 
     .input-group {
@@ -307,7 +310,7 @@ export default class Project1 extends Vue {
         justify-content: center;
         align-items: center;
         font-size: 2rem;
-        margin: 0.5rem 0 0;
+        margin: 0.3rem 0 0.5rem 0;
         .fa-solid.fa-sun, .fa-solid.fa-cloud {
           margin: 0 0.5rem;
         }
