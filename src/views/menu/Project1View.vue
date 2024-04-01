@@ -160,6 +160,7 @@ export default class Project1 extends Vue {
 
       .fa-solid.fa-sun, .fa-solid.fa-cloud {margin: 0 0.5rem;}
       .fa-solid.fa-cloud-sun, .fa-solid.fa-snowflake {margin: 0 0.5rem;}
+      .fa-solid.fa-cloud-sun-rain {margin-right: 0.5rem}
 
       .fa-solid.fa-sun:hover {color: gold;}
       .fa-solid.fa-cloud:hover {color: blue;}
