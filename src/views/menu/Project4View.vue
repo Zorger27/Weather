@@ -85,8 +85,8 @@ export default class Project4 extends Vue {};
           <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
         </select>
       </div>
-      <h2 class="title">{{ $t('title1') }}<i title="OpenWeather icon" @click="changeOpenWeatherView"><span
-        :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i> <i
+      <h2 class="title">{{ $t('title1') }}<i title="Open Weather module" @click="changeOpenWeatherView"><span
+        :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i> <i title="Change view"
         @click="changeView"><span :class="['fa', tableView ? 'fa-list' : 'fa-th']"></span></i>
       </h2>
     </div>
