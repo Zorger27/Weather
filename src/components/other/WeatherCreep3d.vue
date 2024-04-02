@@ -58,25 +58,23 @@ export default {
     const handleCityInputChange = async (city) => {
       // Очищаем предыдущие данные о погоде
       clearWeatherData();
-      // Запускаем анимацию немедленно после очистки данных
-      animate();
       // Эмитируем событие вместе с новым значением города
       emit('update:cityName', city);
       await getWeather();
       saveCityToLocalStorage(city);
+      animate();
     };
 
     const updateCityName = async (city) => {
       // Очищаем предыдущие данные о погоде
       clearWeatherData();
-      // Запускаем анимацию немедленно после очистки данных
-      animate();
       // Эмитируем изменение имени города, вместо прямого изменения пропса
       // props.cityName = city;
       emit('update:cityName', city);
       emit('update:cities', cities.value); // Обновление списка городов, если это необходимо
       await getWeather();
       saveCityToLocalStorage(city);
+      animate();
     };
 
     const clearWeatherData = () => {
