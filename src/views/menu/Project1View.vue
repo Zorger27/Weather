@@ -164,6 +164,8 @@ export default class Project1 extends Vue {
 
       .fa-solid.fa-sun:hover {color: gold;}
       .fa-solid.fa-cloud:hover {color: blue;}
+      .fa.fa-yin-yang:hover {color: gold;}
+      .fa-solid.fa-cubes:hover {color: blue;}
       .fa-solid.fa-umbrella:hover {color: purple;}
     }
 

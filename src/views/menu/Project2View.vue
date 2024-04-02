@@ -124,12 +124,8 @@ export default class Project2 extends Vue {};
       .fa.fa-yin-yang, .fa-solid.fa-cubes {
         margin: 0 0.5rem;
       }
-      .fa.fa-yin-yang:hover {
-        color: gold;
-      }
-      .fa-solid.fa-cubes:hover {
-        color: blue;
-      }
+      .fa.fa-yin-yang:hover {color: gold;}
+      .fa-solid.fa-cubes:hover {color: blue;}
     }
     .input-group {
       grid-area: input-group;
