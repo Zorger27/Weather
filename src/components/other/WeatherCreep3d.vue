@@ -55,16 +55,43 @@ export default {
     const saveCityToLocalStorage = (city) => {
       localStorage.setItem("weatherCity", city);
     };
-    const handleCityInputChange = (city) => {
+    const handleCityInputChange = async (city) => {
+      // Очищаем предыдущие данные о погоде
+      clearWeatherData();
+      // Запускаем анимацию немедленно после очистки данных
+      animate();
       // Эмитируем событие вместе с новым значением города
       emit('update:cityName', city);
+      await getWeather();
       saveCityToLocalStorage(city);
     };
-    const updateCityName = (city) => {
-      props.cityName = city;
-      emit('update:cities', cities.value);
-      getWeather();
+
+    const updateCityName = async (city) => {
+      // Очищаем предыдущие данные о погоде
+      clearWeatherData();
+      // Запускаем анимацию немедленно после очистки данных
+      animate();
+      // Эмитируем изменение имени города, вместо прямого изменения пропса
+      // props.cityName = city;
+      emit('update:cityName', city);
+      emit('update:cities', cities.value); // Обновление списка городов, если это необходимо
+      await getWeather();
       saveCityToLocalStorage(city);
+    };
+
+    const clearWeatherData = () => {
+      // Очищаем предыдущие данные о погоде
+      initialWeatherIndicators.forEach(indicator => {
+        scene.remove(indicator); // Удаляем объекты из сцены
+      });
+      initialWeatherIndicators = []; // Очищаем массив объектов
+      renderer.renderLists.dispose(); // Очищаем кэш рендерера
+
+      // Остановить анимацию после очистки данных о погоде, используя сохраненный ID
+      if (animationId !== null) {
+        cancelAnimationFrame(animationId);
+        animationId = null; // Сброс ID анимации, чтобы избежать его повторной отмены
+      }
     };
 
     const getWeather = async () => {
@@ -103,8 +130,10 @@ export default {
         weatherArray.forEach((weather) => {
           createWeatherObject(weather); // Вызываем функцию createWeatherObject для создания объекта погоды
         });
-
+        // Загрузка данных о погоде успешно завершена
+        loading.value = false;
       } catch (error) {
+        // Обработка ошибки при загрузке данных о погоде
         console.error("Error fetching weather data:", error);
         loading.value = false;
         error.value = `${t('error')}: ${t('unknown-city')}`;
@@ -112,9 +141,8 @@ export default {
         loading.value = false;
       }
     };
-
-    // Вызываем getWeather при инициализации
-    getWeather();
+    // // Вызываем getWeather при инициализации
+    // getWeather();
 
     let nextPositionX = 0; // Стартовая позиция для первого объекта
 
@@ -170,9 +198,15 @@ export default {
       animate();
     };
 
-    const animate = () => {
-      requestAnimationFrame(animate);
+    let animationId = null; // Глобальная переменная для хранения ID анимации
 
+    const animate = () => {
+      // requestAnimationFrame(animate);
+
+      // Отменяем предыдущую запланированную анимацию (если она есть)
+      if (animationId !== null) {
+        cancelAnimationFrame(animationId);
+      }
       const speed = 0.01; // Скорость движения
 
       // Используем `initialWeatherIndicators` для итерации
@@ -198,6 +232,9 @@ export default {
       });
 
       renderer.render(scene, camera);
+
+      // Запланировать следующий кадр анимации
+      animationId = requestAnimationFrame(animate);
     };
 
     const onWindowResize = () => {

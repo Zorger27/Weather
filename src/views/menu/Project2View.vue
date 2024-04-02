@@ -72,7 +72,7 @@ export default class Project2 extends Vue {};
     <div class="inner">
       <div class="input-group" v-show="cripView3d">
         <label for="city">{{ $t('city') }}</label>
-        <input type="text" id="city" v-model="cityName" @input="callHandleCityInputChange(cityName)" @keydown.enter="callGetWeather"
+        <input type="text" id="city" v-model="cityName" @change="callHandleCityInputChange(cityName)" @keydown.enter="callGetWeather"
                ref="cityInput"> <i title="Clear" @click="clearCity" class="fas fa-trash-alt"></i>
         <button class="get" @click="callGetWeather" :title="$t('btn')">{{ $t('get') }}</button>
         <button class="getMobile" @click="callGetWeather" :title="$t('btn')"><i class="fas fa-arrow-circle-down"></i></button>
@@ -80,7 +80,6 @@ export default class Project2 extends Vue {};
           <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
         </select>
       </div>
-<!--      <h2 class="title">{{ $t('title1') }}<i title="3D Creeping line" @click="changeCrip3d"> <span :class="['fa', cripView3d ? 'fa-yin-yang' : 'fa-cubes']"></span></i></h2>-->
       <h2 class="title">{{ $t('title1') }}<i title="3D Creeping line" @click="changeCrip3d"> <span :class="['fa','fa-solid', cripView3d ? 'fa-yin-yang' : 'fa-cubes']"></span></i></h2>
     </div>
     <div class="creep3d">
