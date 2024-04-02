@@ -141,6 +141,7 @@ export default {
         loading.value = false;
       }
     };
+
     // // Вызываем getWeather при инициализации
     // getWeather();
 
