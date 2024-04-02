@@ -255,9 +255,9 @@ export default class WeatherCreep extends Vue {}
         <!-- Вывод данных о погоде в бегущей строке -->
       </div>
     </div>
-    <div v-if="loading" class="error">{{ $t('loading') }}</div>
-    <div v-else class="error">{{ error }}</div>
   </div>
+  <div v-if="loading" class="error">{{ $t('loading') }}</div>
+  <div v-else class="error">{{ error }}</div>
 </template>
 
 <style lang="scss" scoped>
