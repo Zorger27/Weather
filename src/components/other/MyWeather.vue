@@ -268,10 +268,18 @@ export default class MyWeather extends Vue {}
   }
 }
 .error {
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: bold;
   color: darkred;
   margin: 1rem auto;
+}
+@media(max-width: 1020px) {
+  .error {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: darkred;
+    margin: 1rem auto;
+  }
 }
 
 @media (max-width: 768px) {
@@ -308,7 +316,7 @@ export default class MyWeather extends Vue {}
     }
   }
   .error {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: darkred;
     margin: 1rem auto;
