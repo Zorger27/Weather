@@ -28,6 +28,7 @@ import WeatherCreep3d from "@/components/other/WeatherCreep3d.vue";
     if (savedCity) {
       this.cityName = savedCity;
       this.callUpdateCityName(savedCity);
+      // this.$forceUpdate();
     } else {
       this.cityName = this.$t("cities.Kyiv");
       this.callUpdateCityName(this.cityName);
@@ -46,6 +47,9 @@ import WeatherCreep3d from "@/components/other/WeatherCreep3d.vue";
       if (this.$refs.weatherCreep3d) {
         this.$refs.weatherCreep3d.getWeather();
       }
+      // Перезагрузка страницы
+      // document.location.reload();
+      window.location.reload();
     },
     callHandleCityInputChange(cityName: string) {
       if (this.$refs.weatherCreep3d) {

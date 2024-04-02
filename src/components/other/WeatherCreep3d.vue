@@ -55,6 +55,7 @@ export default {
     const saveCityToLocalStorage = (city) => {
       localStorage.setItem("weatherCity", city);
     };
+
     const handleCityInputChange = async (city) => {
       // Очищаем предыдущие данные о погоде
       clearWeatherData();
@@ -75,6 +76,10 @@ export default {
       await getWeather();
       saveCityToLocalStorage(city);
       animate();
+      // // Перезагрузка страницы
+      // window.location.reload();
+      // Принудительно обновляем компонент
+      // this.$forceUpdate();
     };
 
     const clearWeatherData = () => {
