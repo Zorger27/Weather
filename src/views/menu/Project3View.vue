@@ -87,8 +87,8 @@ export default class Project3 extends Vue {
           <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
         </select>
       </div>
-      <h2 class="title">{{ $t('title2') }} <i title="Creeping line" @click="changeCrip"> <span :class="['fa-solid', cripView ? 'fa-cloud-sun-rain' : 'fa-umbrella']"></span></i>
-        <input v-show="cripView" type="range" v-model.number="speed" min="0" max="6" step="0.2" />
+      <h2 class="title">{{ $t('title2') }} <i :title="[cripView ? 'Close Creeping line' : 'Start Creeping line']" @click="changeCrip"> <span :class="['fa-solid', cripView ? 'fa-cloud-sun-rain' : 'fa-umbrella']"></span></i>
+        <input title="Changing speed of Creeping line" v-show="cripView" type="range" v-model.number="speed" min="0" max="6" step="0.2" />
       </h2>
     </div>
     <WeatherCreep ref="weatherCreep" class="creep" :cityName="cityName" @update:cities="cities = $event" :crip-view="cripView" :speed="speed"></WeatherCreep>
@@ -126,12 +126,8 @@ export default class Project3 extends Vue {
       .fa-solid.fa-cloud-sun-rain, .fa-solid.fa-umbrella {
         margin: 0 0.5rem;
       }
-      .fa-solid.fa-cloud-sun-rain:hover {
-        color: gold;
-      }
-      .fa-solid.fa-umbrella:hover {
-        color: blue;
-      }
+      //.fa-solid.fa-cloud-sun-rain:hover {color: gold;}
+      //.fa-solid.fa-umbrella:hover {color: blue;}
     }
     .input-group {
       grid-area: input-group;

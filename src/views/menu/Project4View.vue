@@ -85,8 +85,8 @@ export default class Project4 extends Vue {};
           <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
         </select>
       </div>
-      <h2 class="title">{{ $t('title1') }}<i title="Open Weather module" @click="changeOpenWeatherView"><span
-        :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i> <i title="Change view"
+      <h2 class="title">{{ $t('title1') }}<i :title="[OpenWeatherView ? 'Close OpenWeather module' : 'Start OpenWeather module']" @click="changeOpenWeatherView"><span
+        :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i> <i :title="[tableView ? 'Start viewing in List view' : 'Start viewing in Table view']"
         @click="changeView"><span :class="['fa', tableView ? 'fa-list' : 'fa-th']"></span></i>
       </h2>
     </div>
@@ -128,12 +128,8 @@ export default class Project4 extends Vue {};
       .fa-solid.fa-sun, .fa-solid.fa-cloud {
         margin: 0 0.5rem;
       }
-      .fa-solid.fa-sun:hover {
-        color: gold;
-      }
-      .fa-solid.fa-cloud:hover {
-        color: blue;
-      }
+      //.fa-solid.fa-sun:hover {color: gold;}
+      //.fa-solid.fa-cloud:hover {color: blue;}
     }
     .input-group {
       grid-area: input-group;

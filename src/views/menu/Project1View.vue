@@ -110,12 +110,12 @@ export default class Project1 extends Vue {
       </div>
       <h2 class="title">
 <!--        {{ $t('title2') }}-->
-        <i title="Open Weather module" @click="changeOpenWeatherView"><span
-        :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i> <i title="Change view"
-        @click="changeView"><span :class="['fa', tableView ? 'fa-list' : 'fa-th']"></span></i> <i title="3D Creeping line"
+        <i :title="[OpenWeatherView ? 'Close OpenWeather module' : 'Start OpenWeather module']" @click="changeOpenWeatherView"><span
+        :class="['fa-solid', OpenWeatherView ? 'fa-sun' : 'fa-cloud']"></span></i> <i :title="[tableView ? 'Start viewing in List view' : 'Start viewing in Table view']"
+        @click="changeView"><span :class="['fa', tableView ? 'fa-list' : 'fa-th']"></span></i> <i :title="[cripView3d ? 'Close 3D Creeping line' : 'Start 3D Creeping line']"
         @click="changeCrip3d"> <span :class="['fa','fa-solid', cripView3d ? 'fa-yin-yang' : 'fa-cubes']"></span></i>
-        <i title="Creeping line" @click="changeCrip"> <span :class="['fa-solid', cripView ? 'fa-cloud-sun-rain' : 'fa-umbrella']"></span></i>
-        <input v-show="cripView" type="range" v-model.number="speed" min="0" max="6" step="0.2" />
+        <i :title="[cripView ? 'Close Creeping line' : 'Start Creeping line']" @click="changeCrip"> <span :class="['fa-solid', cripView ? 'fa-cloud-sun-rain' : 'fa-umbrella']"></span></i>
+        <input title="Changing speed of Creeping line" v-show="cripView" type="range" v-model.number="speed" min="0" max="6" step="0.2" />
       </h2>
     </div>
     <div class="creep3d">
@@ -162,11 +162,11 @@ export default class Project1 extends Vue {
       .fa.fa-yin-yang, .fa-solid.fa-cubes {margin: 0 0.5rem;}
       .fa-solid.fa-cloud-sun-rain {margin-right: 0.5rem}
 
-      .fa-solid.fa-sun:hover {color: gold;}
-      .fa-solid.fa-cloud:hover {color: blue;}
-      .fa.fa-yin-yang:hover {color: gold;}
-      .fa-solid.fa-cubes:hover {color: blue;}
-      .fa-solid.fa-umbrella:hover {color: purple;}
+      //.fa-solid.fa-sun:hover {color: gold;}
+      //.fa-solid.fa-cloud:hover {color: blue;}
+      //.fa.fa-yin-yang:hover {color: gold;}
+      //.fa-solid.fa-cubes:hover {color: blue;}
+      //.fa-solid.fa-umbrella:hover {color: purple;}
     }
 
     .input-group {

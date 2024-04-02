@@ -84,7 +84,7 @@ export default class Project2 extends Vue {};
           <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
         </select>
       </div>
-      <h2 class="title">{{ $t('title1') }}<i title="3D Creeping line" @click="changeCrip3d"> <span :class="['fa','fa-solid', cripView3d ? 'fa-yin-yang' : 'fa-cubes']"></span></i></h2>
+      <h2 class="title">{{ $t('title1') }}<i :title="[cripView3d ? 'Close 3D Creeping line' : 'Start 3D Creeping line']" @click="changeCrip3d"> <span :class="['fa','fa-solid', cripView3d ? 'fa-yin-yang' : 'fa-cubes']"></span></i></h2>
     </div>
     <div class="creep3d">
       <WeatherCreep3d :crip-view3d="cripView3d" :cityName="cityName" @update:cityName="cityName = $event" @update:cities="cities = $event" ref="weatherCreep3d"></WeatherCreep3d>
@@ -124,8 +124,8 @@ export default class Project2 extends Vue {};
       .fa.fa-yin-yang, .fa-solid.fa-cubes {
         margin: 0 0.5rem;
       }
-      .fa.fa-yin-yang:hover {color: gold;}
-      .fa-solid.fa-cubes:hover {color: blue;}
+      //.fa.fa-yin-yang:hover {color: gold;}
+      //.fa-solid.fa-cubes:hover {color: blue;}
     }
     .input-group {
       grid-area: input-group;
