@@ -77,7 +77,7 @@ export default class Project4 extends Vue {};
     <div class="inner">
       <div class="input-group">
         <label for="city">{{ $t('city') }}</label>
-        <input type="text" id="city" v-model="cityName" @change="callHandleCityInputChange(cityName)" @keydown.enter="callGetWeather"
+        <input type="text" id="city" v-model="cityName" @input="callHandleCityInputChange(cityName)" @keydown.enter="callGetWeather"
                ref="cityInput"> <i title="Clear" @click="clearCity" class="fas fa-trash-alt"></i>
         <button class="get" @click="callGetWeather" :title="$t('btn')">{{ $t('get') }}</button>
         <button class="getMobile" @click="callGetWeather" :title="$t('btn')"><i class="fas fa-arrow-circle-down"></i></button>
