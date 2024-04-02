@@ -199,7 +199,6 @@ export default {
     };
 
     let animationId = null; // Глобальная переменная для хранения ID анимации
-
     const animate = () => {
       // requestAnimationFrame(animate);
 
