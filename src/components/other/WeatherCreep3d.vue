@@ -76,9 +76,10 @@ export default {
       await getWeather();
       saveCityToLocalStorage(city);
       animate();
+
       // // Перезагрузка страницы
       // window.location.reload();
-      // Принудительно обновляем компонент
+      // // Принудительно обновляем компонент
       // this.$forceUpdate();
     };
 
@@ -144,8 +145,6 @@ export default {
         loading.value = false;
       }
     };
-    // // Вызываем getWeather при инициализации
-    // getWeather();
 
     let nextPositionX = 0; // Стартовая позиция для первого объекта
 
