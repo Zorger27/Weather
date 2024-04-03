@@ -49,7 +49,7 @@ export default {
       // Например, обновить локальные данные, повторно запросить данные о погоде и т.д.
       handleCityInputChange(newCityName);
       updateCityName(newCityName);
-      getWeather();
+      // getWeather();
     });
 
     const saveCityToLocalStorage = (city) => {
