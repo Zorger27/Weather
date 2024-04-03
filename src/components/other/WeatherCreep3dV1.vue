@@ -49,7 +49,7 @@ export default {
       // Например, обновить локальные данные, повторно запросить данные о погоде и т.д.
       handleCityInputChange(newCityName);
       updateCityName(newCityName);
-      getWeather();
+      // getWeather();
     });
 
     const saveCityToLocalStorage = (city) => {
@@ -79,7 +79,7 @@ export default {
 
       // // Перезагрузка страницы
       // window.location.reload();
-      // Принудительно обновляем компонент
+      // // Принудительно обновляем компонент
       // this.$forceUpdate();
     };
 
@@ -134,53 +134,25 @@ export default {
         weatherArray.forEach((weather) => {
           createWeatherObject(weather); // Вызываем функцию createWeatherObject для создания объекта погоды
         });
+        // Загрузка данных о погоде успешно завершена
+        loading.value = false;
       } catch (error) {
         // Обработка ошибки при загрузке данных о погоде
         console.error("Error fetching weather data:", error);
+        loading.value = false;
         error.value = `${t('error')}: ${t('unknown-city')}`;
       } finally {
         loading.value = false;
       }
     };
-    // // Вызываем getWeather при инициализации
-    // getWeather();
 
     let nextPositionX = 0; // Стартовая позиция для первого объекта
-    let currentTextureIndex = 0; // Текущий индекс текстуры
-    const texturePaths = [
-      '/assets/img/textures/texture01.webp',
-      '/assets/img/textures/texture02.webp',
-      '/assets/img/textures/texture03.webp',
-      '/assets/img/textures/texture04.webp',
-      '/assets/img/textures/texture05.webp',
-      '/assets/img/textures/texture06.webp',
-      '/assets/img/textures/texture07.webp',
-      '/assets/img/textures/texture08.webp',
-      '/assets/img/textures/texture09.webp',
-      '/assets/img/textures/texture10.webp'
-    ];
 
     const createWeatherObject = (weather) => {
       const weatherInd = `${weather.key}: ${weather.value}`;
+      const loader = new FontLoader();
 
-      // Определяем индекс текстуры и обновляем его
-      const texturePath = texturePaths[currentTextureIndex];
-      currentTextureIndex = (currentTextureIndex + 1) % texturePaths.length;
-
-      // Асинхронная загрузка шрифта
-      const loadFont = new Promise((resolve, reject) => {
-        const loader = new FontLoader();
-        loader.load('https://threejs.org/examples/fonts/droid/droid_serif_regular.typeface.json', resolve, undefined, reject);
-      });
-
-      // Асинхронная загрузка текстуры
-      const loadTexture = new Promise((resolve, reject) => {
-        const textureLoader = new THREE.TextureLoader();
-        textureLoader.load(texturePath, resolve, undefined, reject);
-      });
-
-      // Ожидаем загрузку шрифта и текстуры
-      Promise.all([loadFont, loadTexture]).then(([font, texture]) => {
+      loader.load('https://threejs.org/examples/fonts/droid/droid_serif_regular.typeface.json', (font) => {
         const geometry = new TextGeometry(weatherInd, {
           font: font,
           size: 0.2,
@@ -190,22 +162,26 @@ export default {
         geometry.computeBoundingBox();
         const textWidth = geometry.boundingBox.max.x - geometry.boundingBox.min.x;
 
-        const material = new THREE.MeshBasicMaterial({ map: texture });
+        const textureLoader = new THREE.TextureLoader();
+        textureLoader.load('/assets/img/textures/texture03.webp', function (texture) {
+          const material = new THREE.MeshBasicMaterial({ map: texture });
 
-        const weatherObject = new THREE.Mesh(geometry, material);
-        weatherObject.rotation.y = THREE.MathUtils.degToRad(27);
-        weatherObject.rotation.x = THREE.MathUtils.degToRad(-5);
+          const weatherObject = new THREE.Mesh(geometry, material);
 
-        // Выставляем позицию с учетом предыдущего текста и добавляем "пробелы" между ними
-        weatherObject.position.x = nextPositionX;
-        // Обновляем nextPositionX для следующего объекта, добавляем ширину текущего текста и примерное расстояние для двух "пробелов"
-        // Подберите значение 0.2 (или другое) в зависимости от желаемого расстояния между словами
-        nextPositionX += textWidth + 0.2;
+          const RotationAngleY = 27; // Угол в градусах
+          const RotationAngleX = -5; // Угол в градусах
+          weatherObject.rotation.y = THREE.MathUtils.degToRad(RotationAngleY)
+          weatherObject.rotation.x = THREE.MathUtils.degToRad(RotationAngleX)
 
-        initialWeatherIndicators.push(weatherObject);
-        scene.add(weatherObject);
-      }).catch(error => {
-        console.error('Error loading font or texture:', error);
+          // Выставляем позицию с учетом предыдущего текста и добавляем "пробелы" между ними
+          weatherObject.position.x = nextPositionX;
+          // Обновляем nextPositionX для следующего объекта, добавляем ширину текущего текста и примерное расстояние для двух "пробелов"
+          // Подберите значение 0.2 (или другое) в зависимости от желаемого расстояния между словами
+          nextPositionX += textWidth + 0.2;
+
+          initialWeatherIndicators.push(weatherObject);
+          scene.add(weatherObject);
+        });
       });
     };
 
