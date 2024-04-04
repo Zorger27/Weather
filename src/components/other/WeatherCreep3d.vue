@@ -291,6 +291,7 @@ export default {
       renderer.dispose();
     });
     // console.error('cityName:', props.cityName)
+    // console.log('cityName:', props.cityName)
 
     return {
       marquee,
