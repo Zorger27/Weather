@@ -5,7 +5,7 @@ import {FontLoader} from "three/examples/jsm/loaders/FontLoader";
 import {TextGeometry} from "three/examples/jsm/geometries/TextGeometry";
 import axios from "axios";
 import {useI18n} from "vue-i18n";
-import { useStore } from 'vuex';
+import {useStore} from 'vuex';
 
 export default {
   name: 'WeatherCreep3d',
