@@ -69,6 +69,8 @@ import WeatherCreep3d from "@/components/other/WeatherCreep3d.vue";
         this.$refs.weatherCreep.getWeather();
         this.$refs.weatherCreep3d.getWeather();
       }
+      // Перезагрузка страницы
+      window.location.reload();
     },
     callHandleCityInputChange(cityName: string) {
       if (this.$refs.myWeatherComponent && this.$refs.weatherCreep && this.$refs.weatherCreep3d) {
