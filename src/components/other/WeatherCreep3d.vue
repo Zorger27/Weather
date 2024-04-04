@@ -29,7 +29,6 @@ export default {
     const countryCode = ref(''); // Объявляем здесь, чтобы было доступно везде в setup()
     const countryName = ref(''); // Переменная для хранения имени страны
     let scene, camera, renderer, initialWeatherIndicators = [];
-
     // Вычисляемое свойство для городов
     const cities = computed(() => {
       return ["Kyiv", "Odessa", "Kharkiv", "Dubai", "Antalya", "Shanghai", "Benidorm", "Valencia"].map(city => {
@@ -97,7 +96,6 @@ export default {
         animationId = null; // Сброс ID анимации, чтобы избежать его повторной отмены
       }
     };
-
     const getWeather = async () => {
       loading.value = true;
       weather.value = null;
@@ -292,6 +290,7 @@ export default {
     onUnmounted(() => {
       renderer.dispose();
     });
+    // console.error('cityName:', props.cityName)
 
     return {
       marquee,
