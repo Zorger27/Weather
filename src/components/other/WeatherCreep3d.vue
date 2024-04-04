@@ -142,8 +142,6 @@ export default {
         loading.value = false;
       }
     };
-    // // Вызываем getWeather при инициализации
-    // getWeather();
 
     let nextPositionX = 0; // Стартовая позиция для первого объекта
     const texturePaths = [
@@ -173,24 +171,19 @@ export default {
     const createWeatherObject = (weather) => {
       const weatherInd = `${weather.key}: ${weather.value}`;
 
-      // Проверяем, остались ли доступные текстуры
-      if (texturePaths.length === 0) {
-        console.error('No more textures available!');
-      }
-
       // Берем текстуру из перемешанного массива
       const texturePath = texturePaths.pop(); // Теперь берем последний элемент из уже перемешанного массива
 
       // Асинхронная загрузка шрифта
       const loadFont = new Promise((resolve, reject) => {
         const loader = new FontLoader();
-        loader.load('https://threejs.org/examples/fonts/droid/droid_serif_regular.typeface.json', resolve, undefined, reject);
+        loader.load('https://threejs.org/examples/fonts/droid/droid_serif_regular.typeface.json', resolve, undefined, (error) => reject('Font load error: ' + error.message));
       });
 
       // Асинхронная загрузка текстуры
       const loadTexture = new Promise((resolve, reject) => {
         const textureLoader = new THREE.TextureLoader();
-        textureLoader.load(texturePath, resolve, undefined, reject);
+        textureLoader.load(texturePath, resolve, undefined, (error) => reject('Texture load error: ' + error.message));
       });
 
       // Ожидаем загрузку шрифта и текстуры
@@ -219,8 +212,11 @@ export default {
         initialWeatherIndicators.push(weatherObject);
         scene.add(weatherObject);
       }).catch(error => {
-        console.error('Error loading font or texture:', error);
-      });
+        console.error('Error loading font or texture. Details:', error);
+      })
+      //   .finally(() => {
+      //   console.log('Promise processing finished, check for uncaught errors.');
+      // });
     };
 
     const init = () => {
