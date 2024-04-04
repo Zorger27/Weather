@@ -146,7 +146,6 @@ export default {
     // getWeather();
 
     let nextPositionX = 0; // Стартовая позиция для первого объекта
-    let currentTextureIndex = 0; // Текущий индекс текстуры
     const texturePaths = [
       '/assets/img/textures/texture01.webp',
       '/assets/img/textures/texture02.webp',
@@ -159,13 +158,22 @@ export default {
       '/assets/img/textures/texture09.webp',
       '/assets/img/textures/texture10.webp'
     ];
+    // Функция для перемешивания массива
+    const shuffleArray = (array) => {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    };
+
+    // Перемешиваем массив с текстурами
+    shuffleArray(texturePaths);
 
     const createWeatherObject = (weather) => {
       const weatherInd = `${weather.key}: ${weather.value}`;
 
-      // Определяем индекс текстуры и обновляем его
-      const texturePath = texturePaths[currentTextureIndex];
-      currentTextureIndex = (currentTextureIndex + 1) % texturePaths.length;
+      // Получаем путь к следующей текстуре
+      const texturePath = texturePaths.pop(); // Извлекаем последний элемент из массива
 
       // Асинхронная загрузка шрифта
       const loadFont = new Promise((resolve, reject) => {
