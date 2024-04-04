@@ -160,7 +160,6 @@ export default {
       '/assets/img/textures/texture11.webp',
       '/assets/img/textures/texture12.webp',
       '/assets/img/textures/texture13.webp'
-
     ];
     // Функция для перемешивания массива
     const shuffleArray = (array) => {
@@ -173,6 +172,11 @@ export default {
 
     const createWeatherObject = (weather) => {
       const weatherInd = `${weather.key}: ${weather.value}`;
+
+      // Проверяем, остались ли доступные текстуры
+      if (texturePaths.length === 0) {
+        console.error('No more textures available!');
+      }
 
       // Берем текстуру из перемешанного массива
       const texturePath = texturePaths.pop(); // Теперь берем последний элемент из уже перемешанного массива
