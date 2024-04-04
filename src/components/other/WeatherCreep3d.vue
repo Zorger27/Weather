@@ -156,7 +156,11 @@ export default {
       '/assets/img/textures/texture07.webp',
       '/assets/img/textures/texture08.webp',
       '/assets/img/textures/texture09.webp',
-      '/assets/img/textures/texture10.webp'
+      '/assets/img/textures/texture10.webp',
+      '/assets/img/textures/texture11.webp',
+      '/assets/img/textures/texture12.webp',
+      '/assets/img/textures/texture13.webp'
+
     ];
     // Функция для перемешивания массива
     const shuffleArray = (array) => {
@@ -165,15 +169,13 @@ export default {
         [array[i], array[j]] = [array[j], array[i]];
       }
     };
-
-    // Перемешиваем массив с текстурами
-    shuffleArray(texturePaths);
+    shuffleArray(texturePaths); // Просто перемешиваем texturePaths, не присваивая результат
 
     const createWeatherObject = (weather) => {
       const weatherInd = `${weather.key}: ${weather.value}`;
 
-      // Получаем путь к следующей текстуре
-      const texturePath = texturePaths.pop(); // Извлекаем последний элемент из массива
+      // Берем текстуру из перемешанного массива
+      const texturePath = texturePaths.pop(); // Теперь берем последний элемент из уже перемешанного массива
 
       // Асинхронная загрузка шрифта
       const loadFont = new Promise((resolve, reject) => {
