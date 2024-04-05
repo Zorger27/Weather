@@ -17,7 +17,7 @@ import WeatherCreep3d from "@/components/other/WeatherCreep3d.vue";
       tableView: false,
       cripView: true,
       speed: 1,
-      cripView3d: false,
+      cripView3d: true,
     }
   },
   mounted() {
