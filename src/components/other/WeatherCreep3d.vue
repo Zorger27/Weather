@@ -102,9 +102,10 @@ export default {
       error.value = null;
       try {
         const openWeatherMapToken = process.env["VUE_APP_OPENWEATHERMAP_TOKEN"];
+        const language = locale.value; // Получение текущего языка интерфейса
         const currentCity = props.cityName;
         const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${currentCity}&units=metric&lang=ua&appid=${openWeatherMapToken}`
+          `https://api.openweathermap.org/data/2.5/weather?q=${currentCity}&units=metric&lang=${language}&appid=${openWeatherMapToken}`
         );
 
         // Обновляем countryCode

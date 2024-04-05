@@ -68,8 +68,9 @@ interface WeatherData {
 
       try {
         const openWeatherMapToken = process.env["VUE_APP_OPENWEATHERMAP_TOKEN"];
+        const language = this.$i18n.locale; // Получение текущего языка интерфейса
         const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${this.cityName}&units=metric&lang=ua&appid=${openWeatherMapToken}`
+          `https://api.openweathermap.org/data/2.5/weather?q=${this.cityName}&units=metric&lang=${language}&appid=${openWeatherMapToken}`
         );
         this.weather = response.data;
       } catch (error) {
