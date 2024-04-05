@@ -242,6 +242,9 @@ margin-right:0.5rem">:</span><span style="color: darkmagenta; font-weight: bold;
       type: Number,
       default: 1,
     },
+    cityName: {
+      type: String,
+    },
   },
   components: {},
 })
