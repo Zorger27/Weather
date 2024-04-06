@@ -49,10 +49,10 @@ import WeatherCreep3d from "@/components/other/WeatherCreep3d.vue";
     },
     changeCrip() {
       this.cripView = !this.cripView;
-      // Если при переключении в режим бегущей строки данные уже должны быть загружены, вызываем загрузку
-      if (this.cripView) {
-        this.callGetWeather();
-      }
+      // // Если при переключении в режим бегущей строки данные уже должны быть загружены, вызываем загрузку
+      // if (this.cripView) {
+      //   this.callGetWeather();
+      // }
     },
     changeCrip3d() {
       this.cripView3d = !this.cripView3d;
@@ -64,13 +64,15 @@ import WeatherCreep3d from "@/components/other/WeatherCreep3d.vue";
     },
     callGetWeather() {
       this.speed = 1;
-      if (this.$refs.myWeatherComponent && this.$refs.weatherCreep && this.$refs.weatherCreep3d) {
+      if (this.$refs.myWeatherComponent && this.$refs.weatherCreep) {
         this.$refs.myWeatherComponent.getWeather();
         this.$refs.weatherCreep.getWeather();
-        this.$refs.weatherCreep3d.getWeather();
       }
-      // Перезагрузка страницы
-      window.location.reload();
+      if (this.$refs.weatherCreep3d) {
+        this.$refs.weatherCreep3d.getWeather();
+        // Перезагрузка страницы
+        window.location.reload();
+      }
     },
     callHandleCityInputChange(cityName: string) {
       if (this.$refs.myWeatherComponent && this.$refs.weatherCreep && this.$refs.weatherCreep3d) {
