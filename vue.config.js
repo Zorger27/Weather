@@ -43,6 +43,7 @@ module.exports = {
         publicPath: false,
         useHash: false,
         metas: [
+          {attributes: {name: 'google-site-verification', content: 'Gq9vrXtN91P1JteGFo-xrlLKT0PR8u-4P4xs21oUr8Y'}},
           {attributes: {name: 'description', content: 'Weather forecast from OpenWeather'}},
           {attributes: {property: 'og:title', content: 'Weather'}},
           {attributes: {property: 'twitter:title', content: 'Weather'}},
