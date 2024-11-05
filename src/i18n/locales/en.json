@@ -8,7 +8,7 @@
     "prg01": "Three in one",
     "prg02": "Creeping line 3D",
     "prg03": "Creeping line",
-    "prg04": "Table view",
+    "prg04": "Table / list",
     "about": "About"
   },
   "footer": {
@@ -65,7 +65,7 @@
     "disc": "Description"
   },
   "project4": {
-    "name": "Table view",
+    "name": "Table / list",
     "disc": "Description"
   },
   "about": {

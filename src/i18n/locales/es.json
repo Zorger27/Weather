@@ -8,7 +8,7 @@
     "prg01": "Tres en uno",
     "prg02": "Línea progresiva 3D",
     "prg03": "Línea progresiva",
-    "prg04": "Vista de tabla",
+    "prg04": "Tabla / lista",
     "about": "Sobre"
   },
   "footer": {
@@ -65,7 +65,7 @@
     "disc": "Descripción"
   },
   "project4": {
-    "name": "Vista de tabla",
+    "name": "Tabla / lista",
     "disc": "Descripción"
   },
   "about": {
