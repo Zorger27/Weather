@@ -16,8 +16,8 @@ import OpenWeather from "@/components/other/OpenWeather.vue";
     }
   },
   mounted() {
-    const mainTitle = 'Table view';
-    const title = 'Table view';
+    const mainTitle = 'Table / List';
+    const title = 'Table / List';
     const metaDescription = 'Weather forecast from OpenWeather';
     const description = 'Weather forecast from OpenWeather';
     const imageUrl = 'https://weather-zorger.vercel.app/assets/ogimage/bmp/project4.jpg';
