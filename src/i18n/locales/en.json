@@ -5,10 +5,10 @@
     "es": "Spanish"
   },
   "header": {
-    "prg01": "Weather Newest",
-    "prg02": "Weather 3D",
-    "prg03": "Weather v.2.0",
-    "prg04": "Weather Old",
+    "prg01": "Three in one",
+    "prg02": "Creeping line 3D",
+    "prg03": "Creeping line",
+    "prg04": "Table view",
     "about": "About"
   },
   "footer": {
@@ -53,19 +53,19 @@
   "indicator": "Indicator",
   "value": "Value",
   "project1": {
-    "name": "Weather forecast Newest",
+    "name": "Three in one",
     "disc": "Description"
   },
   "project2": {
-    "name": "Weather forecast 3D",
+    "name": "Creeping line 3D",
     "disc": "Description"
   },
   "project3": {
-    "name": "Weather forecast v.2.0",
+    "name": "Creeping line",
     "disc": "Description"
   },
   "project4": {
-    "name": "Weather forecast Old",
+    "name": "Table view",
     "disc": "Description"
   },
   "about": {

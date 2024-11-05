@@ -14,8 +14,8 @@ import WeatherCreep3d from "@/components/other/WeatherCreep3d.vue";
     }
   },
   mounted() {
-    const mainTitle = 'Weather 3D';
-    const title = 'Weather 3D';
+    const mainTitle = 'Creeping line 3D';
+    const title = 'Creeping line 3D';
     const metaDescription = 'Weather forecast from OpenWeather';
     const description = 'Weather forecast from OpenWeather';
     const imageUrl = 'https://weather-zorger.vercel.app/assets/ogimage/bmp/project2.jpg';

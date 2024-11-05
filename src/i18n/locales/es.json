@@ -5,10 +5,10 @@
     "es": "Español"
   },
   "header": {
-    "prg01": "Tiempo más nuevo",
-    "prg02": "Tiempo 3D",
-    "prg03": "Tiempo v.2.0",
-    "prg04": "Tiempo antiguos",
+    "prg01": "Tres en uno",
+    "prg02": "Línea progresiva 3D",
+    "prg03": "Línea progresiva",
+    "prg04": "Vista de tabla",
     "about": "Sobre"
   },
   "footer": {
@@ -53,19 +53,19 @@
   "indicator": "Indicador",
   "value": "Valor",
   "project1": {
-    "name": "El Tiempo más nuevo",
+    "name": "Tres en uno",
     "disc": "Descripción"
   },
   "project2": {
-    "name": "El Tiempo 3D",
+    "name": "Línea progresiva 3D",
     "disc": "Descripción"
   },
   "project3": {
-    "name": "El Tiempo v.2.0",
+    "name": "Línea progresiva",
     "disc": "Descripción"
   },
   "project4": {
-    "name": "El Tiempo Antiguos",
+    "name": "Vista de tabla",
     "disc": "Descripción"
   },
   "about": {

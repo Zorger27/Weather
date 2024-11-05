@@ -13,8 +13,8 @@ import {openGraphMixin} from "@/assets/ogimage/openGraphMixin";
     }
   },
   mounted() {
-    const mainTitle = 'About Weather';
-    const title = 'About Weather';
+    const mainTitle = 'About the Weather';
+    const title = 'About the Weather';
     const metaDescription = 'Weather forecast from OpenWeather';
     const description = 'Weather forecast from OpenWeather';
     const imageUrl = 'https://weather-zorger.vercel.app/assets/ogimage/bmp/about.jpg';
