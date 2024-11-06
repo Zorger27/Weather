@@ -21,8 +21,8 @@ import WeatherCreep3d from "@/components/other/WeatherCreep3d.vue";
     }
   },
   mounted() {
-    const mainTitle = 'Three in one';
-    const title = 'Three in one';
+    const mainTitle = 'Three in One';
+    const title = 'Three in One';
     const metaDescription = 'Weather forecast from OpenWeather';
     const description = 'Weather forecast from OpenWeather';
     const imageUrl = 'https://weather-zorger.vercel.app/assets/ogimage/bmp/project1.jpg';
