@@ -4,7 +4,6 @@
 ### Technologies: Three.js, Vue.js, VueX, HTML5, CSS3, FlexBox CSS, JavaScript, TypeScript. ###
 ![07-11-2024](https://github.com/user-attachments/assets/fb2a3815-913f-448c-a965-794059ce561b)
 
-
 ### Project setup (install dependencies)
 ```
 npm install
