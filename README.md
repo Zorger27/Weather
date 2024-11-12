@@ -4,7 +4,7 @@
 ### Technologies: Three.js, Vue.js, VueX, HTML5, CSS3, FlexBox CSS, JavaScript, TypeScript. ###
 ![07-11-2024](https://github.com/user-attachments/assets/fb2a3815-913f-448c-a965-794059ce561b)
 
-#### *I showcase my custom-built weather forecasting web app that delivers real-time data from OpenWeather for any city worldwide 🌍.* ####
+#### *Custom-built weather forecasting web app that delivers real-time data from OpenWeather for any city worldwide* 🌍. ####
 
 <ins>Key Features of My App:</ins> <br>
 ✅ Flexible City Selection: Choose a city from the list or type it manually — get an accurate forecast in just seconds! <br>
