@@ -71,8 +71,8 @@
   "about": {
     "title": "El Tiempo de OpenWeather",
     "more01": "Más información...",
-    "more02": "Esta aplicación web recibe datos reales del pronóstico del tiempo para cualquier ciudad seleccionada de OpenWeather.",
-    "more03": "Ordena diferentes indicadores meteorológicos y se los muestra al usuario en diferentes vistas: lista, tabla o línea progresiva.",
+    "more02": "Una aplicación web personalizada para pronósticos meteorológicos, que proporciona datos en tiempo real de OpenWeather para cualquier ciudad del mundo. Ya sea que seas un entusiasta de la tecnología o simplemente tengas curiosidad por el clima, ¡esta app tiene algo para todos!",
+    "more03": "Características clave de la aplicación: selección flexible de ciudades (elige una ciudad de la lista o introdúcela manualmente), múltiples formatos de visualización (Tabla o Lista, Línea progresiva, Línea progresiva 3D, Modo Tres en Uno). Desarrollada desde cero con un stack tecnológico moderno.",
     "more04": "¡Hay MUCHAS cosas interesantes aquí! \uD83D\uDE09\uD83E\uDD13",
     "more05": "¡Bienvenido! \uD83E\uDD29\uD83D\uDE0E",
     "technologies": "Tecnologías",
