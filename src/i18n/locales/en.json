@@ -71,9 +71,9 @@
   "about": {
     "title": "Weather forecast",
     "more01": "More information...",
-    "more02": "Custom-built weather forecasting application that delivers real-time data from OpenWeather for any city worldwide. Whether you're a tech enthusiast or just curious about the weather, this app has something for everyone!",
-    "more03": "Key features of application: flexible city selection (choose a city from the list or type it manually), multiple display formats (Table or List View, Creeping line, Creeping line 3D, Three-in-One Mode). Developed from scratch with a modern tech stack.",
-    "more04": "There are a LOT of interesting things here! \uD83D\uDE09\uD83E\uDD13",
+    "more02": "☀\uFE0F Custom-built weather forecasting application that delivers real-time data from OpenWeather for any city worldwide.",
+    "more03": "⛈ Whether you're a tech enthusiast or just curious about the weather, this app has something for everyone! Key features of application: flexible city selection (choose a city from the list or type it manually), multiple display formats (Table or List View, Creeping line, Creeping line 3D, Three-in-One Mode). ☔\uFE0F",
+    "more04": "⛄\uFE0F Developed from scratch with a modern tech stack.",
     "more05": "Welcome! \uD83E\uDD29\uD83D\uDE0E",
     "technologies": "Technologies",
     "name": "Name",
