@@ -8,7 +8,7 @@ import Copyright from "@/components/util/Сopyright.vue"
   data() {
     return {
       currentYear: new Date().getFullYear(), // Текущий год
-      progYear: 2023, // Установленный год (год программирования приложения)
+      progYear: 2024, // Установленный год (год программирования приложения)
       getFooterLogoImage: require('@/assets/img/header-logo.svg') as string, // Логотип
     };
   },
