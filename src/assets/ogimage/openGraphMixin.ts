@@ -52,7 +52,9 @@ export const openGraphMixin = {
         { property: 'og:url', content: url },
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'https://Zorin.Expert' },
-        { property: 'twitter:card', content: 'summary_large_image' }
+        { property: 'twitter:card', content: 'summary_large_image' },
+        { name: 'author', content: 'Anatolii Zorin' },
+        { name: 'robots', content: 'index,follow' }
       ];
 
       metaTags.forEach((metaTag) => {
