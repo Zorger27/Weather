@@ -1,9 +1,17 @@
+interface MetaTag {
+  name?: string;
+  property?: string;
+  content: string;
+}
+
 export const openGraphMixin = {
   methods: {
+
+    // Устанавливает заголовок страницы
     setPageTitle(mainTitle: string): void {
-      // Проверка, существует ли уже тег <title>
       let pageTitle = document.querySelector('title');
 
+      // Проверка, существует ли уже тег <title>
       if (pageTitle) {
         // Если тег <title> существует, обновить его содержимое
         pageTitle.innerText = mainTitle;
@@ -15,8 +23,25 @@ export const openGraphMixin = {
       }
     },
 
+    // Устанавливает или обновляет canonical URL
+    setCanonical(url?: string): void {
+      const canonicalUrl = url || window.location.href;
+
+      // Удаляем старый canonical, если есть
+      const existingCanonical = document.querySelector('link[rel="canonical"]');
+      if (existingCanonical) existingCanonical.remove();
+
+      // Создаём новый тег
+      const link = document.createElement('link');
+      link.setAttribute('rel', 'canonical');
+      link.setAttribute('href', canonicalUrl);
+      document.head.appendChild(link);
+    },
+
+
+    // Устанавливает Open Graph и Twitter мета-теги
     setOpenGraphTags(metaDescription: string, title: string, description: string, imageUrl: string, url: string): void {
-      const metaTags = [
+      const metaTags: MetaTag[] = [
         { name: 'description', content: metaDescription },
         { property: 'og:title', content: title },
         { property: 'twitter:title', content: title },
@@ -26,6 +51,7 @@ export const openGraphMixin = {
         { property: 'twitter:image', content: imageUrl },
         { property: 'og:url', content: url },
         { property: 'og:type', content: 'website' },
+        { property: 'og:site_name', content: 'https://Zorin.Expert' },
         { property: 'twitter:card', content: 'summary_large_image' }
       ];
 
@@ -40,7 +66,7 @@ export const openGraphMixin = {
 
         // Удалить существующие мета-теги с тем же property или name
         const existingMetaTags = document.querySelectorAll(
-          `[property="${metaTag.property}"], [name="${metaTag.name}"]`
+          `[property="${metaTag.property || ''}"], [name="${metaTag.name || ''}"]`
         );
         existingMetaTags.forEach((tag) => tag.remove());
 

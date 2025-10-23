@@ -25,6 +25,7 @@ import OpenWeather from "@/components/other/OpenWeather.vue";
 
     this.setOpenGraphTags(metaDescription, title, description, imageUrl, url);
     this.setPageTitle(mainTitle);
+    this.setCanonical(url);
 
     const savedCity = localStorage.getItem('weatherCity');
     if (savedCity) {

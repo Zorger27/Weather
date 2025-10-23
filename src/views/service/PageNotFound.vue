@@ -14,6 +14,7 @@ import {openGraphMixin} from "@/assets/ogimage/openGraphMixin";
 
     this.setOpenGraphTags(metaDescription, title, description, imageUrl, url);
     this.setPageTitle(mainTitle);
+    this.setCanonical(url);
   },
   methods: {},
   components: {},

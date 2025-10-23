@@ -30,6 +30,7 @@ import WeatherCreep3d from "@/components/other/WeatherCreep3d.vue";
 
     this.setOpenGraphTags(metaDescription, title, description, imageUrl, url);
     this.setPageTitle(mainTitle);
+    this.setCanonical(url);
 
     const savedCity = localStorage.getItem('weatherCity');
     if (savedCity) {
